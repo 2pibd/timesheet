@@ -42,7 +42,6 @@
 
         </div>
 
-
     </div>
     <div class="table-bordered table-responsive printable-section h-100">
 
