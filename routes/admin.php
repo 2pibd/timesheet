@@ -12,6 +12,7 @@ use App\Http\Controllers\faqController;
 use App\Http\Controllers\flag_colorController;
 use App\Http\Controllers\industryController;
 use App\Http\Controllers\invoiceController;
+use App\Http\Controllers\leaving_detailController;
 use App\Http\Controllers\mailController;
 use App\Http\Controllers\menuController;
 use App\Http\Controllers\online_messageController;
@@ -178,6 +179,16 @@ use Illuminate\Support\Facades\Route;
          'edit' => 'workflow.edit',
          'update' => 'workflow.update',
          'destroy' => 'workflow.destroy'
+     ]);
+
+     Route::resource('leaving_details',  leaving_detailController::class)->names([
+         'index' => 'leaving_details.index',
+         'create' => 'leaving_details.create',
+         'store' => 'leaving_details.store',
+         'show' => 'leaving_details.show',
+         'edit' => 'leaving_details.edit',
+         'update' => 'leaving_details.update',
+         'destroy' => 'leaving_details.destroy'
      ]);
 
 
