@@ -21,7 +21,7 @@
                     <div class="flex-shrink-0">
                         <a href="{{route('timesheet.create')}}" class="btn btn-primary btn-sm"><i
                                 class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>
-                        <a href="{{route('admin/timesheet/index')}}" class="btn btn-info btn-sm" title="Back"><i
+                        <a href="{{route('timesheet.index')}}" class="btn btn-info btn-sm" title="Back"><i
                                 class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                     </div>
                 </div><!-- end card header -->
@@ -35,12 +35,36 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('timesheet.update', $timesheet->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf()
+                            <ul class="nav nav-pills nav-customs nav-danger mb-3" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#border-navs-home" role="tab">Timesheet</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#border-navs-profile" role="tab">Timesheet Details</a>
+                                </li>
 
-                            @include ('/admin/.timesheet.form', ['formMode' => 'edit'])
-                        </form>
+                            </ul><!-- Tab panes -->
+                            <div class="tab-content text-muted">
+                                <div class="tab-pane active" id="border-navs-home" role="tabpanel">
+                                        <form method="POST" action="{{ route('timesheet.update', $timesheet->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                                            {{ method_field('PATCH') }}
+                                            @csrf()
+
+                                            @include ('/admin/.timesheet.form', ['formMode' => 'edit'])
+                                        </form>
+
+                                </div>
+                                <div class="tab-pane" id="border-navs-profile" role="tabpanel">
+                                    <form method="POST" action="{{ route('timesheet.update', $timesheet->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                                        {{ method_field('PATCH') }}
+                                        @csrf()
+
+                                        @include ('/admin/.timesheet.details_form', ['formMode' => 'edit'])
+                                    </form>
+                                </div>
+                            </div>
+
+
 
 
                 </div>

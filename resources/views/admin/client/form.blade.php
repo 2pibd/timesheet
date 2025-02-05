@@ -1,38 +1,37 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                role="tab" aria-controls="profile" aria-selected="true">
             Client Profile
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button" role="tab" aria-controls="details" aria-selected="false" disabled>
+        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button" role="tab"
+                aria-controls="details" aria-selected="false" disabled>
             Logo
         </button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="review" aria-selected="false" disabled>
+        <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button"
+                role="tab" aria-controls="review" aria-selected="false" disabled>
             Address
         </button>
     </li>
 
 
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="review" aria-selected="false" disabled>
+        <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button"
+                role="tab" aria-controls="review" aria-selected="false" disabled>
             Contact Person
         </button>
     </li>
-
+{{--
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="compliance-tab" data-bs-toggle="tab" data-bs-target="#compliance" type="button" role="tab" aria-controls="review" aria-selected="false" disabled>
+        <button class="nav-link" id="compliance-tab" data-bs-toggle="tab" data-bs-target="#compliance" type="button"
+                role="tab" aria-controls="review" aria-selected="false" disabled>
             Compliance
         </button>
-    </li>
-
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false" disabled>
-            Additional Information
-        </button>
-    </li>
+    </li>--}}
 
 
 
@@ -42,150 +41,225 @@
 <div class="tab-content mt-3" id="myTabContent">
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-    <div class="row">
-<div class="form-group {{ $errors->has('tplname') ? 'has-error' : ''}} mb-2 col-md-8">
-    <label for="tplname" class="control-label">{{ 'Client/Company' }}</label>
-    <input class="form-control" name="tplname" type="text" id="tplname" value="{{ isset($client->tplname) ? $client->tplname : ''}}" required>
-    {!! $errors->first('tplname', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group  mb-2  col-md-4">
-    <label for="status" class="block font-medium text-sm text-gray-700">{{ 'Client Type' }}</label>
-    <select class="form-select" id="client_type_id" name="client_type_id" >
-        <option value="">--Select All--</option>
-        @foreach($client_types as $key=>$item)
-            <option value="{{$item->id}}" {{(isset($client->client_type_id) && ($client->client_type_id == $item->id) )? 'selected': ''}} >{{$item->title}}</option>
-        @endforeach
-    </select>
-    {!! $errors->first('status', '<p>:message</p>') !!}
-</div>
+        <div class="row">
+            <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}} mb-2 col-md-8">
+                <label for="company_name" class="control-label">{{ 'Client/Company*' }}</label>
+                <input class="form-control" name="company_name" type="text" id="company_name"
+                       value="{{ isset($client->company_name) ? $client->company_name : ''}}" required>
+                {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
+            </div>
+            <div class="form-group {{ $errors->has('client_group_id') ? 'has-error' : ''}} mb-2 col-md-4">
+                <label for="client_group_id" class="control-label">{{ 'Client Group ID' }}</label>
+                <input class="form-control" name="client_group_id" type="text" id="client_group_id"
+                       value="{{ isset($client->client_group_id) ? $client->client_group_id : ''}}"  >
+                {!! $errors->first('client_group_id', '<p class="help-block">:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('language_id') ? 'has-error' : ''}}   mb-2  col-md-4 ">
-    <label for="language_id" class="control-label">{{ 'Reference' }}</label>
-    <input class="form-control" name="language_id" type="text" id="language_id" value="{{ isset($client->language_id) ? $client->language_id : '1'}}" >
-    {!! $errors->first('language_id', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group  mb-2  col-md-4">
+                <label for="status" class="block font-medium text-sm text-gray-700">{{ 'Client Type*' }}</label>
+                <select class="form-select" id="client_type_id" name="client_type_id">
+                    <option value="">--Select One--</option>
+                    @foreach($client_types as $key=>$item)
+                        <option
+                            value="{{$item->id}}" {{(isset($client->client_type_id) && ($client->client_type_id == $item->id) )? 'selected': ''}} >{{$item->title}}</option>
+                    @endforeach
+                </select>
+                {!! $errors->first('status', '<p>:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}    mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Company Email' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('external_ref') ? 'has-error' : ''}}   mb-2  col-md-4 ">
+                <label for="external_ref" class="control-label">{{ 'Reference' }}</label>
+                <input class="form-control" name="external_ref" type="text" id="external_ref"
+                       value="{{ isset($client->external_ref) ? $client->external_ref : '1'}}">
+                {!! $errors->first('external_ref', '<p class="help-block">:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Company Phone' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('company_email') ? 'has-error' : ''}}    mb-2  col-md-4">
+                <label for="company_email" class="control-label">{{ 'Company Email' }}</label>
+                <input class="form-control" name="company_email" type="text" id="company_email"
+                       value="{{ isset($client->company_email) ? $client->company_email : ''}}">
+                {!! $errors->first('company_email', '<p class="help-block">:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}  mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Industry Type' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('company_phone') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="company_phone" class="control-label">{{ 'Company Phone' }}</label>
+                <input class="form-control" name="company_phone" type="text" id="company_phone"
+                       value="{{ isset($client->company_phone) ? $client->company_phone : ''}}" required>
+                {!! $errors->first('company_phone', '<p class="help-block">:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Company Id/Reg. No.' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('industry_type') ? 'has-error' : ''}}  mb-2  col-md-4">
+                <label for="industry_type" class="control-label">{{ 'Industry Type' }}</label>
+                <select class="form-select" id="industry_type" name="industry_type">
+                    <option value="">--Select One--</option>
+                    @foreach($industries as $key=>$item)
+                        <option
+                            value="{{$item->id}}" {{(isset($client->industry_type) && ($client->industry_type == $item->id) )? 'selected': ''}} >{{$item->industry}}</option>
+                    @endforeach
+                </select>
+                {!! $errors->first('industry_type', '<p class="help-block">:message</p>') !!}
+            </div>
 
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'VAT Reg ID' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('company_id') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="company_id" class="control-label">{{ 'Company ID/Reg. No.' }}</label>
+                <input class="form-control" name="company_id" type="text" id="company_id"
+                       value="{{ isset($client->company_id) ? $client->company_id : ''}}">
+                {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
+            </div>
 
-
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Website' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
-
-
-
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Company Code Length' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Default currency' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}    mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Default Language' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group {{ $errors->has('subject') ? 'has-error' : ''}}   mb-2  col-md-4">
-    <label for="subject" class="control-label">{{ 'Compliance (Default Group)' }}</label>
-    <input class="form-control" name="subject" type="text" id="subject" value="{{ isset($client->subject) ? $client->subject : ''}}" required>
-    {!! $errors->first('subject', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('vat_reg') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="vat_reg" class="control-label">{{ 'VAT Reg ID' }}</label>
+                <input class="form-control" name="vat_reg" type="text" id="vat_reg"
+                       value="{{ isset($client->vat_reg) ? $client->vat_reg : ''}}">
+                {!! $errors->first('vat_reg', '<p class="help-block">:message</p>') !!}
+            </div>
 
 
-</div>
-<div class="form-group {{ $errors->has('company_profile') ? 'has-error' : ''}}   mb-2  ">
-    <label for="message" class="control-label">{{ 'Company Profile' }}</label>
-    <textarea class="form-control editor"  name="company_profile"   id="company_profile" >{!! $client->company_profile ?? '' !!}</textarea>
-    {!! $errors->first('company_profile', '<p class="help-block">:message</p>') !!}
-</div>
+            <div class="form-group {{ $errors->has('website') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="website" class="control-label">{{ 'Website' }}</label>
+                <input class="form-control" name="website" type="text" id="website"
+                       value="{{ isset($client->website) ? $client->website : ''}}">
+                {!! $errors->first('website', '<p class="help-block">:message</p>') !!}
+            </div>
+
+            <div class="form-group {{ $errors->has('code_length') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="code_length" class="control-label">{{ 'Company Code Length' }}</label>
+                <input class="form-control" name="code_length" type="number" id="code_length"
+                       value="{{ isset($client->code_length) ? $client->code_length : ''}}">
+                {!! $errors->first('code_length', '<p class="help-block">:message</p>') !!}
+            </div>
+
+            <div class="form-group {{ $errors->has('default_currency') ? 'has-error' : ''}}   mb-2  col-md-4">
+                <label for="default_currency" class="control-label">{{ 'Default currency' }}</label>
+                <select class="form-select" id="default_currency" name="default_currency">
+                    <option value="">--Select One--</option>
+                    @foreach($currencies as $key=>$item)
+                        <option
+                            value="{{$item->id}}" {{(isset($client->default_currency) && ($client->default_currency == $item->id) )? 'selected': ''}} >{{$item->title}}</option>
+                    @endforeach
+                </select>
+
+                {!! $errors->first('default_currency', '<p class="help-block">:message</p>') !!}
+            </div>
+
+            <div class="form-group {{ $errors->has('default_lang') ? 'has-error' : ''}}    mb-2  col-md-4">
+                <label for="default_lang" class="control-label">{{ 'Default Language' }}</label>
+                <select class="form-select" id="default_lang" name="default_lang">
+                    <option value="">--Select One--</option>
+                    @foreach($languages as $key=>$item)
+                        <option
+                            value="{{$item->id}}" {{(isset($client->default_lang) && ($client->default_lang == $item->id) )? 'selected': ''}} >{{$item->lang}}</option>
+                    @endforeach
+                </select>
+                {!! $errors->first('default_lang', '<p class="help-block">:message</p>') !!}
+            </div>
 
 
+        </div>
+        <div class="form-group {{ $errors->has('company_profile') ? 'has-error' : ''}}   mb-2  ">
+            <label for="message" class="control-label">{{ 'Company Profile' }}</label>
+            <textarea class="form-control editor" name="company_profile"
+                      id="company_profile">{!! $client->company_profile ?? '' !!}</textarea>
+            {!! $errors->first('company_profile', '<p class="help-block">:message</p>') !!}
+        </div>
+<div class="d-flex gap-3">
+        <div class="mb-3 w-50">
+            <label for="email" class="block font-medium text-sm text-gray-700">{{ 'Email*' }}</label>
+            <input class="form-control" id="email" name="email" type="text" value="{{ isset($client->email) ? $client->email : ''}}" onblur="checkEmail()">
+            <span id="emailError" class="text-danger"></span>
+            {!! $errors->first('email', '<p>:message</p>') !!}
+        </div>
+        <div class="mb-3">
+            <label for="password" class="block font-medium text-sm text-gray-700">{{ 'Password' }}</label>
+            <div class="input-group">
+                <input class="form-control" id="password" name="password" type="password" autocomplete="new-password"  >
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            {!! $errors->first('password', '<p>:message</p>') !!}
+        </div>
 
+    <div class="mb-5">
+        <label for="status" class="block font-medium text-sm text-gray-700">{{ 'Login Access' }}</label>
+        <br>
+        <!-- Radio Buttons -->
+        <div class="btn-group btn-group-sm" role="group" aria-label="web status">
+            <input type="radio" class="btn-check" name="status" id="status1" value="1" autocomplete="off"
+                   @if(isset($client) && $client->status == '1') checked @endif>
+            <label class="btn btn-outline-secondary" for="status1">Active</label>
 
-<div class="form-group text-right float-end">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-</div>
+            <input type="radio" class="btn-check" name="status" id="status2" value="0" autocomplete="off"
+                   @if(isset($client) && $client->status == '0') checked @endif>
+            <label class="btn btn-outline-secondary" for="status2">Inactive</label>
+
+        </div>
     </div>
-    <div class="tab-pane fade" id="details" role="tabpanel" aria-labelledby="details-tab">
-        <p>Details tab content goes here.</p>
+
+</div>
+
+
+
+        <div class="form-group text-right float-end">
+            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+        </div>
+
     </div>
-    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-        <p>Review tab content goes here.</p>
+
+@if(isset($client))
+    <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+        @include('admin/client.logo')
     </div>
+
+    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+        @include('admin/client.company_address')
+    </div>
+    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+        @include('admin/client.company_contact_info')
+    </div>
+    <div class="tab-pane fade" id="compliance" role="tabpanel" aria-labelledby="compliance-tab">
+        @include('admin/client.login_access')
+    </div>
+    @endif
+
 </div>
 
 
 <script src="{{asset('/plugins/ckeditor/ckeditor.js')}}"></script>
 <script type="text/javascript">
-    function CKupdate(){
-        for ( instance in CKEDITOR.instances )
+    function CKupdate() {
+        for (instance in CKEDITOR.instances)
             CKEDITOR.instances[instance].updateElement();
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
-        var editor = CKEDITOR.replace( 'company_profile',  {
+        var editor = CKEDITOR.replace('company_profile', {
             filebrowserBrowseUrl: '{{ url("ckeditor/browsefile") }}?dir={{'userprofile/'. Auth::id()}}/&title=Browse File',
             filebrowserUploadUrl: '{{ url("ckeditor/upload")}}?dir={{'userprofile/'. Auth::id()}}/&title=Browse File'
-        }, {height:['200px'],  toolbar: [
-                [ 'Bold', 'Italic','Underline','Strike','Subscript','Superscript', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','' ],[ 'Styles', 'Format', 'Font', 'FontSize','TextColor', 'BGColor','Image' ,'Source'  ],['colors','tools'],  [   'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe','Link', 'Unlink', 'Anchor' ] ,[ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ],
-                [ 'list', 'indent', 'blocks', 'align', 'bidi' ],  [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ]
-            ]} );
-
+        }, {
+            height: ['200px'], toolbar: [
+                ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', ''], ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor', 'Image', 'Source'], ['colors', 'tools'], ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe', 'Link', 'Unlink', 'Anchor'], ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+                ['list', 'indent', 'blocks', 'align', 'bidi'], ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']
+            ]
+        });
 
 
         const primaryProfileForm = $('#primaryProfileForm');
-        const logoTab =  $('#logo-tab');
+        const logoTab = $('#logo-tab');
         const addressTab = $('#address-tab');
         const contactTab = $('#contacts-tab');
         const complianceTab = $('#compliance-tab');
         const additionalTab = $('#additional-tab');
 
-   @if(isset($client))
+        @if(isset($client))
         logoTab.removeAttr('disabled');
         contactTab.removeAttr('disabled');
         addressTab.removeAttr('disabled');
         complianceTab.removeAttr('disabled');
         additionalTab.removeAttr('disabled');
-   @endif
+        @endif
 
 
     });

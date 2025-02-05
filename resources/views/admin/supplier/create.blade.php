@@ -37,7 +37,7 @@
                             @csrf()
                             @include ('/admin/.supplier.form', ['formMode' => 'create'])
                         </form>
-                    </section>
+
 
                 </div>
             </div>

@@ -150,7 +150,8 @@
             fetch(logoImageUrl)
                 .then(response => response.blob())
                 .then(blob => {
-                    const file = new File([blob], "logo.jpg", { type: blob.type });
+                  const file = new File([blob], "logo", { type: blob.type });
+
                     logoPond.files = [{
                         source: file,
                         options: {
@@ -176,7 +177,7 @@
             allowImageResize: true,
             imageResizeTargetWidth: 64,
             imageResizeTargetHeight: 64,
-            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/gif'],
+            acceptedFileTypes: ['image/png', 'image/jpeg','image/jpg', 'image/gif'],
             maxFileSize: '1MB',
         });
 

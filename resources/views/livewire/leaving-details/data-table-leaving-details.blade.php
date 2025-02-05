@@ -40,27 +40,13 @@
             <ul class="dropdown-menu" aria-labelledby="columnVisibilityDropdown">
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colEmp_ref" checked onclick="toggleColumn('emp_ref')"> Employer Ref
+                        <input type="checkbox" class="form-check-input" id="colEmployer_ref" checked onclick="toggleColumn('employer_ref')"> Employer Ref
                     </label>
                 </li>
+
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colPersonal_ref" checked onclick="toggleColumn('personal_ref')"> Personal Ref
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colFirst_forename" checked onclick="toggleColumn('first_forename')"> Employee Name
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colAddress_line1" checked onclick="toggleColumn('address_line1')"> Address
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colPost_code" checked onclick="toggleColumn('post_code')"> Post Code
+                        <input type="checkbox" class="form-check-input" id="colPersonal_ref" checked onclick="toggleColumn('Personal Ref')"> Post Code
                     </label>
                 </li>
                 <li>
@@ -71,12 +57,12 @@
 
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colDob" checked onclick="toggleColumn('dob')"> Date of Birth
+                        <input type="checkbox" class="form-check-input" id="colLeaving_date" checked onclick="toggleColumn('Leaving Date')"> Date of Birth
                     </label>
                 </li>
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colWorker_type" checked onclick="toggleColumn('worker_type')"> Worker Type
+                        <input type="checkbox" class="form-check-input" id="colLeaving_reason" checked onclick="toggleColumn('Leaving Reason')"> Worker Type
                     </label>
                 </li>
 
@@ -98,8 +84,9 @@
         <div class="col-md-3">
             <select  wire:model.lazy="status" class="form-control form-select">
                 <option value="">Select Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Canceled">Canceled</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -115,12 +102,12 @@
             <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th data-column="emp_ref">
-                    <button wire:click="sortBy('emp_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                <th data-column="employer_ref">
+                    <button wire:click="sortBy('employer_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Employer Ref</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'emp_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'emp_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'employer_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'employer_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -135,76 +122,36 @@
                     </button>
                 </th>
 
-                <th data-column="first_forename">
-                    <button wire:click="sortBy('first_forename')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Employee Name</span>
+                <th data-column="leaving_date">
+                    <button wire:click="sortBy('leaving_date')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start">Leaving Date</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'first_forename' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'first_forename' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'leaving_date' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'leaving_date' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
 
-                <th data-column="address_line1">
-                    <button wire:click="sortBy('address_line1')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Address</span>
+                <th data-column="leaving_reason">
+                    <button wire:click="sortBy('leaving_reason')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start">Leaving Reason</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'address_line1' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'address_line1' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'leaving_reason' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'leaving_reason' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
-
-                <th data-column="post_code">
-                    <button wire:click="sortBy('post_code')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Post Code</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'post_code' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'post_code' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-
-                <th data-column="user_login_id">
-                    <button wire:click="sortBy('user_login_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">User Login ID</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'user_login_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'user_login_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-
-                <th data-column="dob">
-                    <button wire:click="sortBy('dob')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Date of Birth</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'dob' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'dob' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-
-                <th data-column="worker_type">
-                    <button wire:click="sortBy('worker_type')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Worker Type</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'worker_type' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'worker_type' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-
 
                 <th data-column="status">
                     <button wire:click="sortBy('status')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Location</span>
+                        <span class="text-start">Status</span>
                         <span class="sort-icons">
                        <i class="fa fa-sort-up {{ $sortField === 'status' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
                        <i class="fa fa-sort-down {{ $sortField === 'status' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
+
 
                 <th class="no-print">Actions</th>
             </tr>
@@ -215,13 +162,9 @@
             @forelse ($data as $key=>$item)
                 <tr>
                     <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
-                    <td data-column="emp_ref">{{ $item->emp_ref }}</td>
+                    <td data-column="emp_ref">{{ $item->employer_ref }}</td>
                     <td data-column="personal_ref">{{ $item->personal_ref }}</td>
-                    <td data-column="first_forename">{{ $item->first_forename ?? '' }}</td>
-                    <td data-column="address_line1">{{ $item->address_line1 }}</td>
-                    <td data-column="post_code">{{ $item->post_code }}</td>
-                    <td data-column="user_login_id">{{ $item->user_login_id }}</td>
-                    <td data-column="worker_type">{{ $item->worker_type }}</td>
+                    <td data-column="leaving_reason">{{ $item->leaving_date }}</td>
                     <td data-column="status">{{ $item->status }}</td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">
@@ -233,20 +176,20 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-email_template')
+                                        @can('view-leaving_details')
                                             <li><a href="{{ route('worker.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-email_template')
+                                        @can('update-leaving_details')
                                             <li><a href="{{ route('worker.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
                                         @endcan
 
-                                        @can('delete-worker')
+                                        @can('delete-leaving_details')
                                             <li>
-                                                <form method="POST" action="{{ route('worker.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('leaving_details.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()

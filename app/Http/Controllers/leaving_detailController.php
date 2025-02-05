@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\employer;
 use App\Utility\Utility;
 use App\Models\leaving_detail;
 use Illuminate\Http\Request;
@@ -52,7 +54,9 @@ class leaving_detailController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        return view('/admin/.leaving_details.create');
+        $data['status'] = Helper::getEnumValues('leaving_details','status');
+        $data['employers'] = employer::get();
+        return view('/admin/.leaving_details.create', $data);
     }
 
     /**
@@ -69,10 +73,10 @@ class leaving_detailController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'employer_id' => 'required'
+			'employer_ref' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         leaving_detail::create($requestData);
 
         return redirect('leaving_details')->with('flash_message', 'leaving_detail added!');
@@ -112,9 +116,10 @@ class leaving_detailController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $leaving_detail = leaving_detail::findOrFail($id);
-
-        return view('/admin/.leaving_details.edit', compact('leaving_detail'));
+        $data['leaving_detail'] = leaving_detail::findOrFail($id);
+        $data['status'] = Helper::getEnumValues('leaving_details','status');
+        $data['employers'] = employer::get();
+        return view('/admin/.leaving_details.edit',  $data);
     }
 
     /**
@@ -135,10 +140,10 @@ class leaving_detailController extends Controller
 
 
         $this->validate($request, [
-			'employer_id' => 'required'
+			'employer_ref' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $leaving_detail = leaving_detail::findOrFail($id);
         $leaving_detail->update($requestData);
 

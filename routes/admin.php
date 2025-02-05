@@ -13,6 +13,7 @@ use App\Http\Controllers\flag_colorController;
 use App\Http\Controllers\industryController;
 use App\Http\Controllers\invoiceController;
 use App\Http\Controllers\leaving_detailController;
+use App\Http\Controllers\localizationController;
 use App\Http\Controllers\mailController;
 use App\Http\Controllers\menuController;
 use App\Http\Controllers\online_messageController;
@@ -47,8 +48,6 @@ use Illuminate\Support\Facades\Route;
          'update' => 'menu.update',
          'destroy' => 'menu.destroy',
      ]);
-
-
 
      Route::resource('permission', PermissionController::class)->names([
          'index' => 'permission.index',
@@ -114,6 +113,9 @@ use Illuminate\Support\Facades\Route;
 
      Route::post('/upload-usermanual', [user_manualController::class, 'uploadUsermanual']);
      Route::delete('/revert-usermanual', [user_manualController::class, 'revertUsermanual']);
+
+     Route::post('/upload-clientlogo', [clientController::class, 'uploadClientLogo']);
+     Route::delete('/upload-clientlogo', [clientController::class, 'revertClientLogo']);
 
     // Route::post('/webmaster/mail/smtp', [WebmasterController::class, 'mail_smtp_check'])->name('mailSMTPCheck');
      //Route::post('/webmaster/mail/test', [WebmasterController::class, 'mail_test'])->name('mailTest');
@@ -230,6 +232,21 @@ use Illuminate\Support\Facades\Route;
          'destroy' => 'faq.destroy'
      ]);
      Route::post('update-FAQ-flag',  [faqController::class,'update_flag'])->name('update-FAQ-flag');
+
+
+     Route::post('loadContactForm',  [clientController::class,'loadContactForm'])->name('loadContactForm');
+     Route::post('loadAddressForm',  [clientController::class,'loadAddressForm'])->name('loadAddressForm');
+     Route::post('company-contacts',  [clientController::class,'company_contacts'])->name('company-contacts');
+     Route::post('company-address',  [clientController::class,'company_address'])->name('company-address');
+
+     Route::post('save_company_address_info',  [clientController::class,'save_company_address'])->name('save_company_address_info');
+     Route::post('save_contact_person',  [clientController::class,'save_contact_person'])->name('save_contact_person');
+
+
+     Route::post('delete_comAddress/{id}',  [clientController::class,'delete_comAddress'])->name('delete_comAddress');
+     Route::post('delete_comContact/{id}',  [clientController::class,'delete_comContact'])->name('delete_comContact');
+
+     Route::post('/check_email', [UserController::class, 'checkEmail'])->name('check_email');
 
 
      Route::resource('timesheet_status',  timesheet_statusController::class)->names([
@@ -380,7 +397,12 @@ use Illuminate\Support\Facades\Route;
      Route::any('update-sortaccess', [ RoleController::class, 'update_sortaccess'])->name('update_sortaccess');
 
      Route::post('getsegmnets', [segment_structure_infoController::class, 'getsegmnets'])->name('getsegmnets');
-    // Add more admin routes here
+
+     Route::get('load-state',  [localizationController::class, 'load_state'] )->name('load_state');
+     Route::get('load-city',  [localizationController::class, 'load_city'] )->name('load_city');
+
+
+     // Add more admin routes here
 });
 
 

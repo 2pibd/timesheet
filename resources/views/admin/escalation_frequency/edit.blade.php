@@ -6,7 +6,7 @@
 
     @component('admin.components.breadcrumb')
         @slot('li_1')
-            Set Data
+            Menu
         @endslot
         @slot('title')
             Escalation frequency #{{ $escalation_frequency->id }}

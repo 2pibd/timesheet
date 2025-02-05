@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    Supplier
+    Leaving details
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@
             Menu
         @endslot
         @slot('title')
-            Supplier
+            Leaving Details
         @endslot
     @endcomponent
 
@@ -20,15 +20,13 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Supplier</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Leaving Details</h4>
 
                     <div class="flex-shrink-0">
-                        @can('create-supplier')
-                            <a href="{{route('supplier.create')}}" class="btn btn-primary btn-sm"><i
+                        @can('create-leaving_details')
+                            <a href="{{route('leaving_details.create')}}" class="btn btn-primary btn-sm"><i
                                     class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>
                         @endcan
-
-
 
                     </div>
                 </div><!-- end card header -->

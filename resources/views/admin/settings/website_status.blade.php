@@ -6,7 +6,7 @@
 
 
     <!-- Radio Buttons -->
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <div class="btn-group" role="group" aria-label="web status">
         <input type="radio" class="btn-check" name="settings[webstatus]" id="webstatus1" value="1" autocomplete="off"
                @if($settings->webstatus == '1') checked @endif>
         <label class="btn btn-outline-secondary" for="webstatus1">Active</label>

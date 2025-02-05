@@ -90,16 +90,16 @@
     </div>
     <div class="table-bordered table-responsive printable-section">
 
-        <table class="table table-striped">
+        <table class="table table-striped table-sm">
             <thead class="bg-light">
             <tr>
                 <th>#</th>
                 <th data-column="company_name">
-                    <button wire:click="sortBy('name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                    <button wire:click="sortBy('company_name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Client Name</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'tplname' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'tplname' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'company_name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'company_name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -178,11 +178,11 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         @can('view-client')
-                                            <li><a href="{{ route('admin.client.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                            <li><a href="{{ route('client.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
                                         @can('update-client')
-                                            <li><a href="{{ route('admin.client.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                            <li><a href="{{ route('client.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
@@ -190,7 +190,7 @@
 
                                         @can('delete-client')
                                             <li>
-                                                <form method="POST" action="{{ route('admin.client.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('client.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()

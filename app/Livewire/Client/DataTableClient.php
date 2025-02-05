@@ -22,7 +22,7 @@ class DataTableClient extends Component
     public $created_to = '';
     public $perPage  ;
 
-    public $sortField = 'tplname'; // Default sort field
+    public $sortField = 'company_name'; // Default sort field
     public $sortDirection = 'asc'; // Default sort direction
 
 
@@ -46,8 +46,8 @@ class DataTableClient extends Component
         $query = client::query();
 
         if (!empty($this->search)) {
-            $query->where('tplname', 'like', '%' . $this->search . '%')
-                ->orWhere('subject', 'like', '%' . $this->search . '%');
+            $query->where('company_name', 'like', '%' . $this->search . '%')
+                ->orWhere('external_ref', 'like', '%' . $this->search . '%');
         }
 
         if (!empty($this->status)) {
@@ -64,11 +64,11 @@ class DataTableClient extends Component
         $data  = $query->latest()->paginate($this->perPage);
 
         // Debug log
-        \Log::info('Livewire Query', [
+  /*      \Log::info('Livewire Query', [
             'search' => $this->search,
             'sql' => $query->toSql(),
             'bindings' => $query->getBindings(),
-        ]);
+        ]);*/
 
 
         return view('livewire.client.data-table-client',   [ 'data' => $data  ]);

@@ -25,7 +25,8 @@ class client extends Model
      *
      * @var array
      */
-    protected $fillable = ['client_id', 'company_name','external_ref', 'company_email', 'company_phone', 'industry_type', 'company_id','vat_reg', 'address', 'website', 'company_profile',
+    protected $fillable = ['user_id', 'company_name','external_ref', 'client_group_id', 'company_email', 'company_phone', 'industry_type',
+        'company_id','vat_reg', 'address', 'website', 'company_profile',
         'base_path','base_url', 'company_logo', 'top_company','default_currency','default_lang','code_length',
         'address1','address2','address3','address4', 'address5','city','state','postcode','country','html_cv',
         'default_compliance_group', 'status','post_by'];
@@ -35,6 +36,7 @@ class client extends Model
     public function  postby(){
         return $this->belongsTo('App\Models\User' , 'post_by'  );
     }
+
     public function  account(){
         return $this->belongsTo('App\Models\User' , 'user_id','id'  );
     }

@@ -77,7 +77,7 @@ class invoiceController extends Controller
 			'invoice_number' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         invoice::create($requestData);
 
         return redirect('invoice')->with('flash_message', 'invoice added!');
@@ -143,7 +143,7 @@ class invoiceController extends Controller
 			'invoice_number' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $invoice = invoice::findOrFail($id);
         $invoice->update($requestData);
 

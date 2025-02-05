@@ -31,8 +31,6 @@
                 <div class="card-body" >
                     @livewire('client.data-table-client')
 
-
-
                 </div>
             </div>
         </div>

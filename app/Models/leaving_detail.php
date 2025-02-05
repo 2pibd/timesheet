@@ -25,7 +25,7 @@ class leaving_detail extends Model
      *
      * @var array
      */
-    protected $fillable = ['employer_id', 'personal_ref', 'leaving_date', 'leaving_reason', 'status'];
+    protected $fillable = ['employer_ref', 'personal_ref', 'leaving_date', 'leaving_reason', 'status'];
 
-    
+
 }

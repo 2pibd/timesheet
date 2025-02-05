@@ -72,13 +72,13 @@ class timesheetController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'worker_id' => 'required'
+			'client_id' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         timesheet::create($requestData);
 
-        return redirect('timesheet')->with('flash_message', 'timesheet added!');
+        return redirect('admin/timesheet')->with('flash_message', 'timesheet added!');
     }
 
     /**
@@ -138,14 +138,14 @@ class timesheetController extends Controller
 
 
         $this->validate($request, [
-			'worker_id' => 'required'
+			'client_id' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $timesheet = timesheet::findOrFail($id);
         $timesheet->update($requestData);
 
-        return redirect('timesheet')->with('flash_message', 'timesheet updated!');
+        return redirect('admin/timesheet')->with('flash_message', 'timesheet updated!');
     }
 
     /**
@@ -164,6 +164,6 @@ class timesheetController extends Controller
 
         timesheet::destroy($id);
 
-        return redirect('timesheet')->with('flash_message', 'timesheet deleted!');
+        return redirect('admin/timesheet')->with('flash_message', 'timesheet deleted!');
     }
 }

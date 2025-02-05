@@ -14,10 +14,6 @@
 <div class="mb-3 ">
     <label for="file" class="block font-medium text-sm text-gray-700">{{ 'File' }}</label>
 
-    <p class="text-muted">FilePond is a JavaScript library that optimizes multiple images for faster uploads and offers
-        a great, accessible, silky smooth user experience.</p>
-
-
     <input class="filepond"  id="filepond-file" name="file" type="file"
            value="">
     {!! $errors->first('file', '<p>:message</p>') !!}

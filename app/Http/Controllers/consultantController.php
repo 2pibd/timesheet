@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\Language;
+use App\Models\name_title;
+use App\Models\User;
 use App\Utility\Utility;
 use App\Models\consultant;
 use Illuminate\Http\Request;
+use SebastianBergmann\Template\Template;
 
 class consultantController extends Controller
 {
@@ -63,8 +67,9 @@ class consultantController extends Controller
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
-
-        return view('/admin/.consultant.create');
+        $data['name_titles'] = name_title::all();
+        $data['languages'] = Language::where('display_default', '1')->get();
+        return view('/admin/.consultant.create', $data);
     }
 
     /**
@@ -81,10 +86,23 @@ class consultantController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'user_id' => 'required'
+			'first_name' => 'required'
 		]);
+        $userData = $request->all();
+        $userData['name'] = $request->name_title . '  ' . $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+
+        $userData['status'] =  $request->status ? 'Active': 'Inactive';
+
+        $userData['remember_token'] = md5(time());
+        $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : '';
+
+        $user = User::create($userData);
+        $user->syncRoles('Consultant');
+
+
+
         $requestData = $request->all();
-        
+        $requestData['customer_id'] = $user->id;
         consultant::create($requestData);
 
         return redirect('consultant')->with('flash_message', 'consultant added!');
@@ -124,9 +142,11 @@ class consultantController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $consultant = consultant::findOrFail($id);
+        $data['consultant'] = consultant::findOrFail($id);
+        $data['name_titles'] = name_title::all();
+        $data['languages'] = Language::where('display_default', '1')->get();
 
-        return view('/admin/.consultant.edit', compact('consultant'));
+        return view('/admin/.consultant.edit',  $data);
     }
 
     /**
@@ -147,12 +167,20 @@ class consultantController extends Controller
 
 
         $this->validate($request, [
-			'user_id' => 'required'
+			'first_name' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $consultant = consultant::findOrFail($id);
         $consultant->update($requestData);
+
+
+        $userData['name'] = $request->name_title . '  ' . $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+
+        $userData['remember_token'] = md5(time());
+        $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : $consultant->profile->password;
+        $userData['status'] = $request->account_status;
+        $consultant->profile->update($userData);
 
         return redirect('consultant')->with('flash_message', 'consultant updated!');
     }

@@ -599,17 +599,16 @@ class UserController extends Controller
         return redirect('admin');
     }
 
-    public function get_treeviewuser($uid)
+    public function checkEmail(Request $request)
     {
+        $exists = User::where('email', $request->email)->exists();
 
-        return  $data= user_info::recruiters_users($uid);
-
+        return response()->json(['exists' => $exists]);
     }
 
     public function ajaxTreeUserJSON()
     {
         return $treeuser = app('App\Http\Controllers\workflow_template_settingController')->getTreeUser(); //User::where('parent_user_id', Auth::id() )->get();
-
 
     }
 }

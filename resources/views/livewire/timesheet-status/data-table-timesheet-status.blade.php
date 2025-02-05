@@ -63,8 +63,6 @@
                     </button>
                 </th>
 
-
-
                 <th class="no-print">Actions</th>
             </tr>
             </thead>
