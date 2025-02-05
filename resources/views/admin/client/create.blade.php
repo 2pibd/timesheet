@@ -19,7 +19,7 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">New Client</h4>
                     <div class="flex-shrink-0">
-                        <a href="{{url('admin.client')}}" class="btn btn-info btn-sm" title="Back"><i
+                        <a href="{{url('admin/client')}}" class="btn btn-info btn-sm" title="Back"><i
                                 class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                     </div>
                 </div><!-- end card header -->
@@ -33,10 +33,9 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('client.store') }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
-                            @csrf()
+
                             @include ('/admin/.client.form', ['formMode' => 'create'])
-                        </form>
+
 
 
                 </div>

@@ -433,7 +433,7 @@
                 processData: false,
                 method: 'POST',
                 data: formData,
-                success: function (obj) {
+                success: function (data) {
                     $(contactForm)[0].reset();
                     $('#ajaxModal').modal('hide');
                     $('#contactSavebtn').prop('disabled', false);

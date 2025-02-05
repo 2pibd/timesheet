@@ -19,7 +19,7 @@
                     <h4 class="card-title mb-0 flex-grow-1">Edit Client  #{{ $client->id }}</h4>
                     <div class="flex-shrink-0">
                         <a href="{{route('client.create')}}" class="btn btn-primary btn-sm"><i
-                                class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>
+                                class="fa fa-plus"></i>&nbsp;&nbsp;Create New Client</a>
                         <a href="{{route('client.index')}}" class="btn btn-info btn-sm" title="Back"><i
                                 class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                     </div>
@@ -33,12 +33,9 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('client.update', $client->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf()
 
                             @include ('/admin/.client.form', ['formMode' => 'edit'])
-                        </form>
+
 
 
                 </div>

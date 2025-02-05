@@ -37,7 +37,8 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('consultant.update', $consultant->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('consultant.update', $consultant->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8"
+                              id="consultentForm" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf()
 

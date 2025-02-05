@@ -15,6 +15,7 @@ use App\Models\Currency;
 use App\Models\industry;
 use App\Models\Language;
 use App\Models\name_title;
+use App\Models\User;
 use App\Utility\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -54,7 +55,7 @@ class clientController extends Controller
 
         //$data['compliance_groups'] = compliance_group::get();
         $data['status'] = Helper::getEnumValues('clients','status');
-
+        $data['name_titles'] = name_title::all();
         return view('/admin/.client.create', $data);
     }
 
@@ -107,7 +108,7 @@ class clientController extends Controller
 
         $data['address'] = company_address::where('company_id', $id)->get();
         $data['contact_info'] = company_contact_info::where('company_id', $id)->get();
-
+        $data['name_titles'] = name_title::all();
         return view('/admin/.client.edit', $data);
     }
 
@@ -129,10 +130,58 @@ class clientController extends Controller
 
          $client = client::findOrFail($id);
 
-        $client->update($requestData);
+         $client->update($requestData);
 
         return redirect('admin/client')->with('flash_message', 'Client updated!');
     }
+
+    public function loginAccess(Request $request)
+    {
+        if(!Utility::permissionCheck('update-client'))
+        {
+            return back()->with('error',Utility::getPermissionMsg());
+        }
+
+
+        $this->validate($request, [
+            'client_id' => 'required'
+        ]);
+
+         $requestData = $request->all();
+
+        $client = client::findOrFail($request->client_id);
+          /////////////////////////////////
+        if($client){
+            $userData = $request->all();
+            $userData['name'] = $request->name_title . '  ' . $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+
+            $userData['status'] =  $request->status ? 'Active': 'Inactive';
+
+            $userData['remember_token'] = md5(time());
+            $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : '';
+
+            $user = User::updateOrCreate([
+                'id'=> $client->user_id
+            ],$userData);
+
+            $user->syncRoles('Client');
+            $clientData['user_id'] = $user->id;
+            $client->update($clientData);
+            $status = ([
+                'status'=>'success',
+                'message'=> 'Save Successfully'
+            ]);
+
+        }else
+
+        $status = ([
+            'status'=>'failed',
+            'message'=> 'Failed to save'
+        ]);
+
+        return  $status;
+    }
+
 
 
     public function revertClientLogo(Request $request)
@@ -285,7 +334,7 @@ class clientController extends Controller
     public function delete_comContact($id, Request $request)
     {
         $companyContactDel = company_contact_info::where('id', $id)->where('company_id', $request->company_id)->delete();
-        return $status=([
+        return $result=([
             'status'=>'success',
             'message'=>'Removed Successfully'
         ]);
@@ -373,7 +422,7 @@ class clientController extends Controller
             );
          //   app('App\Http\Controllers\address_bookController')->addAddress($addressdata);
 
-            return $status=([
+            return $result=([
                 'status'=>'success',
                 'message'=>'Save Successfully'
             ]);

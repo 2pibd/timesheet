@@ -166,7 +166,9 @@
             <tbody>
             @forelse ($data as $item)
                 <tr>
-                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }} <i class="fa fa-key"></i> </td>
+                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}
+                      @if(isset($item->profile) && $item->profile->status =='Active')  <i class="fa fa-key"></i>  @endif
+                    </td>
                     <td data-column="office_manager">{{ $item->office_manager }}</td>
                     <td data-column="name">{{ $item->name }}</td>
                     <td data-column="client_group_id">{{ $item->client_group_id ?? '' }}</td>
@@ -183,12 +185,12 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-client')
-                                            <li><a href="{{ route('admin.consultant.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                        @can('view-consultant')
+                                            <li><a href="{{ route('consultant.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-client')
-                                            <li><a href="{{ route('admin.consultant.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                        @can('update-consultant')
+                                            <li><a href="{{ route('consultant.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
@@ -196,7 +198,7 @@
 
                                         @can('delete-client')
                                             <li>
-                                                <form method="POST" action="{{ route('admin.consultant.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('consultant.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()

@@ -247,6 +247,7 @@ use Illuminate\Support\Facades\Route;
      Route::post('delete_comContact/{id}',  [clientController::class,'delete_comContact'])->name('delete_comContact');
 
      Route::post('/check_email', [UserController::class, 'checkEmail'])->name('check_email');
+     Route::post('/login-access', [clientController::class, 'loginAccess'])->name('login-access');
 
 
      Route::resource('timesheet_status',  timesheet_statusController::class)->names([

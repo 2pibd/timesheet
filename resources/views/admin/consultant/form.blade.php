@@ -8,14 +8,14 @@
                 <option value="">--</option>
                 @foreach($name_titles as  $item)
                     <option value="{{ $item->title }}"
-                            @if(isset($contacts->contact_name) && $contacts->name_title ==  $item->title) selected @endif>{{ $item->title }}</option>
+                            @if(isset($consultant->profile) && $consultant->profile->name_title ==  $item->title) selected @endif>{{ $item->title }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3 w-75">
             <label for="first_name" class="block font-medium text-sm text-gray-700">{{ 'First Name*' }}</label>
-            <input class="form-control" id="first_name" name="first_name" type="text" value="{{ isset($consultant->first_name) ? $consultant->first_name : ''}}" required>
+            <input class="form-control" id="first_name" name="first_name" type="text" value="{{ isset($consultant->profile->first_name) ? $consultant->profile->first_name : ''}}" required>
             {!! $errors->first('first_name', '<p>:message</p>') !!}
         </div>
     </div>
@@ -24,16 +24,18 @@
     <div class="d-flex gap-2 col-md-6">
         <div class="mb-3 w-50">
             <label for="middle_name" class="block font-medium text-sm text-gray-700">{{ 'Middle Name' }}</label>
-            <input class="form-control" id="middle_name" name="middle_name" type="text" value="{{ isset($consultant->middle_name) ? $consultant->middle_name : ''}}" required>
+            <input class="form-control" id="middle_name" name="middle_name" type="text" value="{{ isset($consultant->profile->middle_name) ? $consultant->profile->middle_name : ''}}"  >
             {!! $errors->first('middle_name', '<p>:message</p>') !!}
         </div>
         <div class="mb-3 w-50">
             <label for="last_name" class="block font-medium text-sm text-gray-700">{{ 'Last Name' }}</label>
-            <input class="form-control" id="last_name" name="last_name" type="text" value="{{ isset($consultant->last_name) ? $consultant->last_name : ''}}" required>
+            <input class="form-control" id="last_name" name="last_name" type="text" value="{{ isset($consultant->profile->last_name) ? $consultant->profile->last_name : ''}}"  >
             {!! $errors->first('last_name', '<p>:message</p>') !!}
         </div>
 
     </div>
+
+
     <div class="col-md-6">
 <div class="mb-3">
     <label for="user_ref" class="block font-medium text-sm text-gray-700">{{ 'User Ref' }}</label>
@@ -94,7 +96,7 @@
     </div>
     <div class="mb-3">
         <label for="email" class="block font-medium text-sm text-gray-700">{{ 'Email*' }}</label>
-        <input class="form-control" id="email" name="email" type="text" value="{{ isset($consultant->email) ? $consultant->email : ''}}" onblur="checkEmail()">
+        <input class="form-control" id="email" name="email" type="text" required value="{{ isset($consultant->profile) ? $consultant->profile->email : ''}}" onblur="checkEmail()">
         <span id="emailError" class="text-danger"></span>
         {!! $errors->first('email', '<p>:message</p>') !!}
     </div>
@@ -120,11 +122,11 @@
     <!-- Radio Buttons -->
     <div class="btn-group btn-group-sm" role="group" aria-label="web status">
         <input type="radio" class="btn-check" name="status" id="status1" value="1" autocomplete="off"
-               @if(isset($consultant) && $consultant->status == '1') checked @endif>
+               @if(isset($consultant) && $consultant->profile->status == 'Active') checked @endif>
         <label class="btn btn-outline-secondary" for="status1">Active</label>
 
         <input type="radio" class="btn-check" name="status" id="status2" value="0" autocomplete="off"
-               @if(isset($consultant) && $consultant->status == '0') checked @endif>
+               @if(isset($consultant) && $consultant->profile->status == 'Inactive') checked @endif>
         <label class="btn btn-outline-secondary" for="status2">Inactive</label>
 
     </div>
@@ -153,6 +155,15 @@
 
 
 <script>
+    $("#consultentForm").on("submit", function(event) {
+
+        if (!emailValid ) {
+            event.preventDefault(); // Stop form submission
+            //alert("Please enter a unique email before submitting.");
+        }
+    });
+
+
     document.getElementById('togglePassword').addEventListener('click', function () {
         let passwordField = document.getElementById('password');
         let icon = this.querySelector('i');
@@ -167,23 +178,28 @@
         }
     });
 
+    var emailValid = true; // Track email validation
+
     function checkEmail() {
         var email = $("#email").val();
         var token = "{{ csrf_token() }}";
-
+        var userId = '{{$consultant->user_id ?? ''}}'
         if(email !== '') {
             $.ajax({
                 url: "{{ route('check_email') }}",
                 type: "POST",
-                data: {email: email, _token: token},
+                data: {email: email, userid: userId  , _token: token},
                 success: function(response) {
                     if(response.exists) {
                         $("#emailError").text("This email is already taken.");
+                        emailValid = false; // Prevent form submission
                     } else {
                         $("#emailError").text("");
+                        emailValid = true; // Allow form submission
                     }
                 }
             });
         }
     }
+
 </script>

@@ -35,7 +35,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('consultant.store') }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('consultant.store') }}" id="consultentForm" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
                             @csrf()
                             @include ('/admin/.consultant.form', ['formMode' => 'create'])
                         </form>

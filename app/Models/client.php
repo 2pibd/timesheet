@@ -57,4 +57,9 @@ class client extends Model
         return $this->hasMany('App\Models\client_contact_info' , 'company_id' );
     }
 
+
+    public function profile(){
+        return $this->belongsTo('App\Models\User','user_id');
+    }
+
 }

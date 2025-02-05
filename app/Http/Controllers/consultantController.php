@@ -35,7 +35,7 @@ class consultantController extends Controller
                 ->orWhere('user_ref', 'LIKE', "%$keyword%")
                 ->orWhere('ref_code', 'LIKE', "%$keyword%")
                 ->orWhere('access_code', 'LIKE', "%$keyword%")
-                ->orWhere('officeial_id', 'LIKE', "%$keyword%")
+                ->orWhere('official_id', 'LIKE', "%$keyword%")
                 ->orWhere('work_telephone', 'LIKE', "%$keyword%")
                 ->orWhere('mobile_number', 'LIKE', "%$keyword%")
                 ->orWhere('address_line1', 'LIKE', "%$keyword%")
@@ -99,13 +99,11 @@ class consultantController extends Controller
         $user = User::create($userData);
         $user->syncRoles('Consultant');
 
-
-
         $requestData = $request->all();
-        $requestData['customer_id'] = $user->id;
+        $requestData['user_id'] = $user->id;
         consultant::create($requestData);
 
-        return redirect('consultant')->with('flash_message', 'consultant added!');
+        return redirect('admin/consultant')->with('flash_message', 'consultant added!');
     }
 
     /**
@@ -174,15 +172,22 @@ class consultantController extends Controller
         $consultant = consultant::findOrFail($id);
         $consultant->update($requestData);
 
+        if($consultant  ) {
+             $userData['name'] = $request->name_title . '  ' . $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+             $userData['status'] =  $request->status ? 'Active': 'Inactive';
+             $userData['remember_token'] = md5(time());
+                $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : (isset($consultant->profile)? $consultant->profile->password : '');
 
-        $userData['name'] = $request->name_title . '  ' . $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+            $user = User::updateOrCreate(
+            [
+                'id'=>$consultant->user_id
+            ],
+                $userData
+            );
+          //  $consultant->profile->update($userData);
+        }
 
-        $userData['remember_token'] = md5(time());
-        $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : $consultant->profile->password;
-        $userData['status'] = $request->account_status;
-        $consultant->profile->update($userData);
-
-        return redirect('consultant')->with('flash_message', 'consultant updated!');
+        return redirect('admin/consultant')->with('flash_message', 'consultant updated!');
     }
 
     /**
@@ -201,6 +206,6 @@ class consultantController extends Controller
 
         consultant::destroy($id);
 
-        return redirect('consultant')->with('flash_message', 'consultant deleted!');
+        return redirect('admin/consultant')->with('flash_message', 'consultant deleted!');
     }
 }

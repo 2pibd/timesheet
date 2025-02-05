@@ -184,7 +184,7 @@ $('.countryName').trigger('change');
                 dataType: "text",
                 method: 'POST',
                 data: addressForm.serialize(),
-                success: function (obj) {
+                success: function (data) {
                     $(addressForm)[0].reset();
                     $('#ajaxModal').modal('hide');
 // $('#addressbtn').prop('disabled', false);

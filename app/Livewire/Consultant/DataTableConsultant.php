@@ -21,7 +21,7 @@ class DataTableConsultant extends Component
     public $created_to = '';
     public $perPage  ;
 
-    public $sortField = 'tplname'; // Default sort field
+    public $sortField = 'name'; // Default sort field
     public $sortDirection = 'asc'; // Default sort direction
 
 

@@ -40,7 +40,7 @@
             <ul class="dropdown-menu" aria-labelledby="columnVisibilityDropdown">
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colOffice_manager" checked onclick="toggleColumn('office_manager')"> Supplier Ref
+                        <input type="checkbox" class="form-check-input" id="colS upplier_ref" checked onclick="toggleColumn('supplier_ref')"> Supplier Ref
                     </label>
                 </li>
                 <li>
@@ -70,8 +70,6 @@
                         <input type="checkbox" class="form-check-input" id="colPost_code" checked onclick="toggleColumn('post_code')"> Post Code
                     </label>
                 </li>
-
-
 
             </ul>
         </div>
@@ -192,20 +190,20 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-client')
-                                            <li><a href="{{ route('admin.consultant.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                        @can('view-supplier')
+                                            <li><a href="{{ route('supplier.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-client')
-                                            <li><a href="{{ route('admin.consultant.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                        @can('update-v')
+                                            <li><a href="{{ route('supplier.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
                                         @endcan
 
-                                        @can('delete-client')
+                                        @can('delete-supplier')
                                             <li>
-                                                <form method="POST" action="{{ route('admin.consultant.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('supplier.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()

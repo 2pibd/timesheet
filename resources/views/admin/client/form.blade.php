@@ -25,15 +25,15 @@
             Contact Person
         </button>
     </li>
-{{--
+
+
+
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="compliance-tab" data-bs-toggle="tab" data-bs-target="#compliance" type="button"
+        <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button"
                 role="tab" aria-controls="review" aria-selected="false" disabled>
-            Compliance
+            Login Access
         </button>
-    </li>--}}
-
-
+    </li>
 
 
 </ul>
@@ -41,7 +41,16 @@
 <div class="tab-content mt-3" id="myTabContent">
     <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-        <div class="row">
+        <form method="POST"
+              @if(isset($client)) action="{{ route('client.update', $client->id) }}" @endif
+              @if(!isset($client)) action="{{ route('client.store') }}" @endif
+             class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+            @if(isset($client))  {{ method_field('PATCH') }}  @endif
+
+            @csrf()
+
+
+            <div class="row">
             <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}} mb-2 col-md-8">
                 <label for="company_name" class="control-label">{{ 'Client/Company*' }}</label>
                 <input class="form-control" name="company_name" type="text" id="company_name"
@@ -162,49 +171,15 @@
                       id="company_profile">{!! $client->company_profile ?? '' !!}</textarea>
             {!! $errors->first('company_profile', '<p class="help-block">:message</p>') !!}
         </div>
-<div class="d-flex gap-3">
-        <div class="mb-3 w-50">
-            <label for="email" class="block font-medium text-sm text-gray-700">{{ 'Email*' }}</label>
-            <input class="form-control" id="email" name="email" type="text" value="{{ isset($client->email) ? $client->email : ''}}" onblur="checkEmail()">
-            <span id="emailError" class="text-danger"></span>
-            {!! $errors->first('email', '<p>:message</p>') !!}
-        </div>
-        <div class="mb-3">
-            <label for="password" class="block font-medium text-sm text-gray-700">{{ 'Password' }}</label>
-            <div class="input-group">
-                <input class="form-control" id="password" name="password" type="password" autocomplete="new-password"  >
-                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
-            {!! $errors->first('password', '<p>:message</p>') !!}
-        </div>
-
-    <div class="mb-5">
-        <label for="status" class="block font-medium text-sm text-gray-700">{{ 'Login Access' }}</label>
-        <br>
-        <!-- Radio Buttons -->
-        <div class="btn-group btn-group-sm" role="group" aria-label="web status">
-            <input type="radio" class="btn-check" name="status" id="status1" value="1" autocomplete="off"
-                   @if(isset($client) && $client->status == '1') checked @endif>
-            <label class="btn btn-outline-secondary" for="status1">Active</label>
-
-            <input type="radio" class="btn-check" name="status" id="status2" value="0" autocomplete="off"
-                   @if(isset($client) && $client->status == '0') checked @endif>
-            <label class="btn btn-outline-secondary" for="status2">Inactive</label>
-
-        </div>
-    </div>
-
-</div>
 
 
 
         <div class="form-group text-right float-end">
             <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
         </div>
-
+        </form>
     </div>
+
 
 @if(isset($client))
     <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
@@ -217,7 +192,7 @@
     <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
         @include('admin/client.company_contact_info')
     </div>
-    <div class="tab-pane fade" id="compliance" role="tabpanel" aria-labelledby="compliance-tab">
+    <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
         @include('admin/client.login_access')
     </div>
     @endif
@@ -250,14 +225,14 @@
         const logoTab = $('#logo-tab');
         const addressTab = $('#address-tab');
         const contactTab = $('#contacts-tab');
-        const complianceTab = $('#compliance-tab');
+        const loginTab = $('#login-tab');
         const additionalTab = $('#additional-tab');
 
         @if(isset($client))
         logoTab.removeAttr('disabled');
         contactTab.removeAttr('disabled');
         addressTab.removeAttr('disabled');
-        complianceTab.removeAttr('disabled');
+        loginTab.removeAttr('disabled');
         additionalTab.removeAttr('disabled');
         @endif
 
