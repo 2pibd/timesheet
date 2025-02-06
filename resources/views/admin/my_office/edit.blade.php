@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Edit my_office  #{{ $my_office->id }}</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Edit My office  #{{ $my_office->id }}</h4>
                     <div class="flex-shrink-0">
                         <a href="{{route('my_office.create')}}" class="btn btn-primary btn-sm"><i
                                 class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>

@@ -55,7 +55,7 @@ class DataTableMyOffice extends Component
 
         $query->orderBy($this->sortField, $this->sortDirection) ;// Apply sorting
 
-        $data  = $query->orderBy('my_offices.created_at', 'desc') ->paginate($this->perPage);
+         $data  = $query->orderBy('my_offices.created_at', 'desc') ->paginate($this->perPage);
 
       /*  // Debug log
         \Log::info('Livewire Query', [

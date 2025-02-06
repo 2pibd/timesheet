@@ -64,9 +64,9 @@ class my_officeController extends Controller
         $this->validate($request, [
 			'client_ref' => 'required'
 		]);
-        $requestData = $request->all();
+         $requestData = request()->except('_token');
 
-        my_office::updateOrCreate($requestData,[]);
+     my_office::updateOrCreate($requestData,[  ]);
 
         return redirect('admin/my_office')->with('flash_message', 'my_office added!');
     }
@@ -135,6 +135,8 @@ class my_officeController extends Controller
         $requestData = $request->all();
 
         $my_office = my_office::findOrFail($id);
+ 
+
         $my_office->update($requestData);
 
         return redirect('admin/my_office')->with('flash_message', 'my_office updated!');

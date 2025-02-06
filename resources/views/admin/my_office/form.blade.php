@@ -19,7 +19,7 @@
         <option value="">--Select One--</option>
         @foreach($departments as $key=>$item)
             <option
-                value="{{$item->ref_code}}" {{(isset($my_office->division_ref) && ($my_office->division_ref == $item->ref_code) )? 'selected': ''}} >{{$item->ref_code}}:: {{$item->name}}</option>
+                value="{{$item->ref_code}}" {{(isset($my_office->department_ref) && ($my_office->department_ref == $item->ref_code) )? 'selected': ''}} >{{$item->ref_code}}:: {{$item->name}}</option>
         @endforeach
     </select>
     {!! $errors->first('department_ref', '<p>:message</p>') !!}
