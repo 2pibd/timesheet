@@ -6,6 +6,7 @@ use App\Http\Controllers\assignmentController;
 use App\Http\Controllers\boundary_validationController;
 use App\Http\Controllers\consultantController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\departmentController;
 use App\Http\Controllers\divisionController;
 use App\Http\Controllers\escalation_frequencyController;
 use App\Http\Controllers\faqController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\leaving_detailController;
 use App\Http\Controllers\localizationController;
 use App\Http\Controllers\mailController;
 use App\Http\Controllers\menuController;
+use App\Http\Controllers\my_officeController;
 use App\Http\Controllers\online_messageController;
 use App\Http\Controllers\segment_combination_setupController;
 use App\Http\Controllers\segment_head_detailsController;
@@ -340,6 +342,28 @@ use Illuminate\Support\Facades\Route;
          'update' => 'client.update',
          'destroy' => 'client.destroy'
      ]);
+
+     Route::resource('my_office',  my_officeController::class)->names([
+         'index' => 'my_office.index',
+         'create' => 'my_office.create',
+         'store' => 'my_office.store',
+         'show' => 'my_office.show',
+         'edit' => 'my_office.edit',
+         'update' => 'my_office.update',
+         'destroy' => 'my_office.destroy'
+     ]);
+
+     Route::resource('department',  departmentController::class)->names([
+         'index' => 'department.index',
+         'create' => 'department.create',
+         'store' => 'department.store',
+         'show' => 'department.show',
+         'edit' => 'department.edit',
+         'update' => 'department.update',
+         'destroy' => 'department.destroy'
+     ]);
+
+
 
      Route::resource('segment_head',  segment_headController ::class)->names([
          'index' => 'segment_head.index',

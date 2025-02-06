@@ -65,7 +65,7 @@
             </div>
 
             <div class="form-group  mb-2  col-md-4">
-                <label for="status" class="block font-medium text-sm text-gray-700">{{ 'Client Type*' }}</label>
+                <label for="client_type_id" class="block font-medium text-sm text-gray-700">{{ 'Client Type*' }}</label>
                 <select class="form-select" id="client_type_id" name="client_type_id">
                     <option value="">--Select One--</option>
                     @foreach($client_types as $key=>$item)
@@ -73,7 +73,7 @@
                             value="{{$item->id}}" {{(isset($client->client_type_id) && ($client->client_type_id == $item->id) )? 'selected': ''}} >{{$item->title}}</option>
                     @endforeach
                 </select>
-                {!! $errors->first('status', '<p>:message</p>') !!}
+                {!! $errors->first('client_type_id', '<p>:message</p>') !!}
             </div>
 
             <div class="form-group {{ $errors->has('external_ref') ? 'has-error' : ''}}   mb-2  col-md-4 ">

@@ -8,32 +8,27 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+                <div class="w-full">
 
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900">
-                                Edit employer #{{ $employer->id }}
+                                Show employer
                             </h2>
                             <div class="flex justify-end mt-5">
                                 <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('employer.index') }}" title="Back">< Back</a>
                             </div>
                         </header>
+                        </br>
 
-                        @if ($errors->any())
-                            <ul class="text-sm text-red-600 space-y-1 mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                        <table class="shadow-lg bg-white">
+                            <tr>
+                                <td class="border px-8 py-4 font-bold">ID</td>
+                                <td class="border px-8 py-4">{{ $employer->id }}</td>
+                            </tr>
+                            <tr><td class="border px-8 py-4 font-bold"> Employer Name </td><td class="border px-8 py-4"> {{ $employer->employer_name }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Emp Ref </td><td class="border px-8 py-4"> {{ $employer->emp_ref }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Division Ref </td><td class="border px-8 py-4"> {{ $employer->division_ref }} </td></tr>
+                        </table>
 
-                        <form method="POST" action="{{ route('employer.update', $employer->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf()
-
-                            @include ('/admin/.employer.form', ['formMode' => 'edit'])
-                        </form>
                     </section>
 
                 </div>

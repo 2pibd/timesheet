@@ -25,7 +25,7 @@ class division extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['business_id', 'name', 'ref_code'];
 
-    
+
 }

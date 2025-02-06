@@ -32,6 +32,36 @@
             <i class="fa fa-print me-2 text-info"></i> Print
         </button>
 
+        <!-- New Column Visibility Button -->
+        <div class="dropdown">
+            <button class="btn btn-sm btn-soft-info dropdown-toggle" type="button" id="columnVisibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-tasks me-2 text-info"></i> Column Visibility
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="columnVisibilityDropdown">
+                <li>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="colmy_office_name" checked onclick="toggleColumn('my_office_name')"> my_office Name
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="colclient_ref" checked onclick="toggleColumn('client_ref')"> my_office ref
+                    </label>
+                </li>
+                <li>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="colDivision_ref" checked onclick="toggleColumn('division_ref')"> Business Name
+                    </label>
+                </li>
+
+                <li>
+                    <label class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="colDepartment_ref" checked onclick="toggleColumn('department_ref')"> Contact Number
+                    </label>
+                </li>
+
+            </ul>
+        </div>
     </div>
 
     <div class="row mb-4">
@@ -47,24 +77,36 @@
             <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th data-column="name">
-                    <button wire:click="sortBy('name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start"> Name</span>
+                <th data-column="my_office_name">
+                    <button wire:click="sortBy('my_office_name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start">Employer Name</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'my_office_name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'my_office_name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
-                <th data-column="ref_code">
-                    <button wire:click="sortBy('ref_code')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start"> Ref Code</span>
+
+                <th data-column="division_ref">
+                    <button wire:click="sortBy('division_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start">Division</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'ref_code' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'ref_code' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'division_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'division_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
+
+                <th  data-column="department_ref">
+                    <button wire:click="sortBy('department_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start">Department</span>
+                        <span class="sort-icons">
+                       <i class="fa fa-sort-up {{ $sortField === 'department_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'department_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                    </span>
+                    </button>
+                </th>
+
                 <th class="no-print">Actions</th>
             </tr>
             </thead>
@@ -72,8 +114,19 @@
             @forelse ($data as $item)
                 <tr>
                     <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
-                    <td data-column="name">{{ $item->name }}</td>
-                    <td data-column="ref_code">{{ $item->ref_code }}</td>
+
+                    <td data-column="my_office_name">{{ $item->client->company_name ?? '' }} ({{ $item->client_ref ?? '' }}) </td>
+
+                    <td data-column="division_ref">
+                        @if(isset($item->department))
+                        {{$item->division->name ?? ''}} ({{ $item->department->ref_code ?? '' }})
+                        @endif
+                    </td>
+                    <td data-column="department_ref">
+                        @if(isset($item->department))
+                        {{$item->department->name ?? ''}} ({{ $item->department->ref_code ?? '' }})
+                        @endif
+                    </td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">
                             <li class="list-inline-item no-print">
@@ -84,26 +137,26 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-division')
-                                            <li><a href="{{ route('division.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                        @can('view-my_office')
+                                            <li><a href="{{ route('my_office.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-division')
-                                            <li><a href="{{ route('division.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                        @can('update-my_office')
+                                            <li><a href="{{ route('my_office.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
                                         @endcan
 
-                                        @can('delete-division')
+                                        @can('delete-my_office')
                                             <li>
-                                                <form method="POST" action="{{ route('division.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('my_office.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()
                                                     <button type="submit"
                                                             class="dropdown-item  btn-link text-black btn-xs"
-                                                            title="Delete Division"
+                                                            title="Delete my_office"
                                                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true"></i>  Delete
                                                     </button>
                                                 </form>
@@ -112,12 +165,12 @@
                                     </ul>
                                 </div>
                             </li>
-                        </ul>
+
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="3" class="text-center">No data available</td>
+                    <td colspan="6" class="text-center">No data available</td>
                 </tr>
             @endforelse
             </tbody>

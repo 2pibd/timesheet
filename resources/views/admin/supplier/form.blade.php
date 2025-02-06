@@ -1,5 +1,5 @@
 <div class="mb-3">
-    <label for="employer_id" class="block font-medium text-sm text-gray-700">{{ 'Employer Id' }}</label>
+    <label for="employer_id" class="block font-medium text-sm text-gray-700">{{ 'Employer' }}</label>
     <input class="form-control" id="employer_id" name="employer_id" type="text" value="{{ isset($supplier->employer_id) ? $supplier->employer_id : ''}}" required>
     {!! $errors->first('employer_id', '<p>:message</p>') !!}
 </div>

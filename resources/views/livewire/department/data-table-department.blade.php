@@ -56,15 +56,16 @@
                     </span>
                     </button>
                 </th>
-                <th data-column="ref_code">
+                <th data-column="name">
                     <button wire:click="sortBy('ref_code')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start"> Ref Code</span>
+                        <span class="text-start"> Ref code</span>
                         <span class="sort-icons">
                        <i class="fa fa-sort-up {{ $sortField === 'ref_code' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
                        <i class="fa fa-sort-down {{ $sortField === 'ref_code' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
+
                 <th class="no-print">Actions</th>
             </tr>
             </thead>
@@ -84,26 +85,26 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-division')
-                                            <li><a href="{{ route('division.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                        @can('view-department')
+                                            <li><a href="{{ route('department.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-division')
-                                            <li><a href="{{ route('division.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                        @can('update-department')
+                                            <li><a href="{{ route('department.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
                                         @endcan
 
-                                        @can('delete-division')
+                                        @can('delete-department')
                                             <li>
-                                                <form method="POST" action="{{ route('division.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('department.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()
                                                     <button type="submit"
                                                             class="dropdown-item  btn-link text-black btn-xs"
-                                                            title="Delete Division"
+                                                            title="Delete department"
                                                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true"></i>  Delete
                                                     </button>
                                                 </form>

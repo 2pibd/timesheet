@@ -599,6 +599,11 @@ class UserController extends Controller
         return redirect('admin');
     }
 
+    public function get_treeviewuser($uid)
+    {
+        return  $data= user_info::recruiters_users($uid);
+    }
+
     public function checkEmail(Request $request)
     {
         $exists = User::where('email', $request->email)->where('id','!=',  $request->userid)->exists();
@@ -606,11 +611,11 @@ class UserController extends Controller
         return response()->json(['exists' => $exists]);
     }
 
-    public function ajaxTreeUserJSON()
+   /* public function ajaxTreeUserJSON()
     {
         return $treeuser = app('App\Http\Controllers\workflow_template_settingController')->getTreeUser(); //User::where('parent_user_id', Auth::id() )->get();
 
-    }
+    }*/
 }
 
 

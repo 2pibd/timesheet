@@ -13,10 +13,10 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900">
-                                Show employer
+                                Show department
                             </h2>
                             <div class="flex justify-end mt-5">
-                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('employer.index') }}" title="Back">< Back</a>
+                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('department.index') }}" title="Back">< Back</a>
                             </div>
                         </header>
                         </br>
@@ -24,9 +24,9 @@
                         <table class="shadow-lg bg-white">
                             <tr>
                                 <td class="border px-8 py-4 font-bold">ID</td>
-                                <td class="border px-8 py-4">{{ $employer->id }}</td>
+                                <td class="border px-8 py-4">{{ $department->id }}</td>
                             </tr>
-                            <tr><td class="border px-8 py-4 font-bold"> Emp Ref </td><td class="border px-8 py-4"> {{ $employer->emp_ref }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Location Id </td><td class="border px-8 py-4"> {{ $employer->location_id }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Division Id </td><td class="border px-8 py-4"> {{ $employer->division_id }} </td></tr>
+                            <tr><td class="border px-8 py-4 font-bold"> Name </td><td class="border px-8 py-4"> {{ $department->name }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Ref Code </td><td class="border px-8 py-4"> {{ $department->ref_code }} </td></tr>
                         </table>
 
                     </section>

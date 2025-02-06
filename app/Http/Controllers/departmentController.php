@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\Utility\Utility;
-use App\Models\employer;
+use App\Models\department;
 use Illuminate\Http\Request;
 
-class employerController extends Controller
+class departmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,25 +18,14 @@ class employerController extends Controller
      */
     public function index(Request $request)
     {
-     if(!Utility::permissionCheck('view-employer'))
+     if(!Utility::permissionCheck('view-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $keyword = $request->get('search');
-        $perPage = 25;
 
-        if (!empty($keyword)) {
-            $employer = employer::where('emp_ref', 'LIKE', "%$keyword%")
-                ->orWhere('location_id', 'LIKE', "%$keyword%")
-                ->orWhere('division_id', 'LIKE', "%$keyword%")
-                ->orWhere('department_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $employer = employer::latest()->paginate($perPage);
-        }
 
-        return view('/admin/.employer.index', compact('employer'));
+        return view('/admin/.department.index');
     }
 
     /**
@@ -46,12 +35,12 @@ class employerController extends Controller
      */
     public function create()
     {
-    if(!Utility::permissionCheck('create-employer'))
+    if(!Utility::permissionCheck('create-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        return view('/admin/.employer.create');
+        return view('/admin/.department.create');
     }
 
     /**
@@ -63,18 +52,18 @@ class employerController extends Controller
      */
     public function store(Request $request)
     {
-     if(!Utility::permissionCheck('create-employer'))
+     if(!Utility::permissionCheck('create-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'emp_ref' => 'required'
+			'name' => 'required'
 		]);
         $requestData = $request->all();
-        
-        employer::create($requestData);
 
-        return redirect('employer')->with('flash_message', 'employer added!');
+        department::create($requestData);
+
+        return redirect('admin/department')->with('flash_message', 'department added!');
     }
 
     /**
@@ -86,14 +75,14 @@ class employerController extends Controller
      */
     public function show($id)
     {
-    if(!Utility::permissionCheck('view-employer'))
+    if(!Utility::permissionCheck('view-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $employer = employer::findOrFail($id);
+        $department = department::findOrFail($id);
 
-        return view('/admin/.employer.show', compact('employer'));
+        return view('/admin/.department.show', compact('department'));
     }
 
     /**
@@ -106,14 +95,14 @@ class employerController extends Controller
     public function edit($id)
     {
 
-     if(!Utility::permissionCheck('update-employer'))
+     if(!Utility::permissionCheck('update-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $employer = employer::findOrFail($id);
+        $department = department::findOrFail($id);
 
-        return view('/admin/.employer.edit', compact('employer'));
+        return view('/admin/.department.edit', compact('department'));
     }
 
     /**
@@ -127,21 +116,21 @@ class employerController extends Controller
     public function update(Request $request, $id)
     {
 
-     if(!Utility::permissionCheck('update-employer'))
+     if(!Utility::permissionCheck('update-department'))
                 {
                     return back()->with('error',Utility::getPermissionMsg());
                 }
 
 
         $this->validate($request, [
-			'emp_ref' => 'required'
+			'name' => 'required'
 		]);
         $requestData = $request->all();
-        
-        $employer = employer::findOrFail($id);
-        $employer->update($requestData);
 
-        return redirect('employer')->with('flash_message', 'employer updated!');
+        $department = department::findOrFail($id);
+        $department->update($requestData);
+
+        return redirect('admin/department')->with('flash_message', 'department updated!');
     }
 
     /**
@@ -153,13 +142,13 @@ class employerController extends Controller
      */
     public function destroy($id)
     {
-     if(!Utility::permissionCheck('delete-employer'))
+     if(!Utility::permissionCheck('delete-department'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        employer::destroy($id);
+        department::destroy($id);
 
-        return redirect('employer')->with('flash_message', 'employer deleted!');
+        return redirect('admin/department')->with('flash_message', 'department deleted!');
     }
 }

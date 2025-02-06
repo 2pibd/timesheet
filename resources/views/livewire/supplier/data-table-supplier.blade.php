@@ -40,7 +40,7 @@
             <ul class="dropdown-menu" aria-labelledby="columnVisibilityDropdown">
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colS upplier_ref" checked onclick="toggleColumn('supplier_ref')"> Supplier Ref
+                        <input type="checkbox" class="form-check-input" id="colSupplier_ref" checked onclick="toggleColumn('supplier_ref')"> Supplier Ref
                     </label>
                 </li>
                 <li>
@@ -102,8 +102,8 @@
                     <button wire:click="sortBy('name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Supplier Ref</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'tplname' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'tplname' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -139,7 +139,6 @@
 
 
                 <th  data-column="company_phone">
-
                     <button wire:click="sortBy('contact_number')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Contact Number</span>
                         <span class="sort-icons">
@@ -148,6 +147,7 @@
                     </span>
                     </button>
                 </th>
+
                 <th  data-column="postcode">
                     <button wire:click="sortBy('address_line1')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Address</span>
@@ -157,6 +157,7 @@
                     </span>
                     </button>
                 </th>
+
                 <th  data-column="post_code">
                     <button wire:click="sortBy('post_code')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Post Code</span>

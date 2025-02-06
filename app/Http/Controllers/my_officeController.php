@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\Models\client;
+use App\Models\department;
+use App\Models\division;
 use App\Utility\Utility;
-use App\Models\supplier;
+use App\Models\my_office;
 use Illuminate\Http\Request;
 
-class supplierController extends Controller
+class my_officeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +21,14 @@ class supplierController extends Controller
      */
     public function index(Request $request)
     {
-     if(!Utility::permissionCheck('view-supplier'))
+     if(!Utility::permissionCheck('view-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
 
-        return view('/admin/.supplier.index' );
+
+        return view('/admin/.my_office.index' );
     }
 
     /**
@@ -35,12 +38,14 @@ class supplierController extends Controller
      */
     public function create()
     {
-    if(!Utility::permissionCheck('create-supplier'))
+    if(!Utility::permissionCheck('create-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
-        $data['employers'] = client::get();
-        return view('/admin/.supplier.create');
+        $data['divisions'] = division::get();
+        $data['departments'] = department::get();
+        $data['clients'] = client::get();
+        return view('/admin/.my_office.create', $data);
     }
 
     /**
@@ -52,18 +57,18 @@ class supplierController extends Controller
      */
     public function store(Request $request)
     {
-     if(!Utility::permissionCheck('create-supplier'))
+     if(!Utility::permissionCheck('create-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'employer_id' => 'required'
+			'client_ref' => 'required'
 		]);
         $requestData = $request->all();
 
-        supplier::create($requestData);
+        my_office::updateOrCreate($requestData,[]);
 
-        return redirect('supplier')->with('flash_message', 'supplier added!');
+        return redirect('admin/my_office')->with('flash_message', 'my_office added!');
     }
 
     /**
@@ -75,14 +80,14 @@ class supplierController extends Controller
      */
     public function show($id)
     {
-    if(!Utility::permissionCheck('view-supplier'))
+    if(!Utility::permissionCheck('view-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $supplier = supplier::findOrFail($id);
+        $my_office = my_office::findOrFail($id);
 
-        return view('/admin/.supplier.show', compact('supplier'));
+        return view('/admin/.my_office.show', compact('my_office'));
     }
 
     /**
@@ -95,14 +100,16 @@ class supplierController extends Controller
     public function edit($id)
     {
 
-     if(!Utility::permissionCheck('update-supplier'))
+     if(!Utility::permissionCheck('update-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $supplier = supplier::findOrFail($id);
-
-        return view('/admin/.supplier.edit', compact('supplier'));
+        $data['my_office'] = my_office::findOrFail($id);
+        $data['divisions'] = division::get();
+        $data['departments'] = department::get();
+        $data['clients'] = client::get();
+        return view('/admin/.my_office.edit', $data);
     }
 
     /**
@@ -116,21 +123,21 @@ class supplierController extends Controller
     public function update(Request $request, $id)
     {
 
-     if(!Utility::permissionCheck('update-supplier'))
+     if(!Utility::permissionCheck('update-my_office'))
                 {
                     return back()->with('error',Utility::getPermissionMsg());
                 }
 
 
         $this->validate($request, [
-			'employer_id' => 'required'
+			'client_ref' => 'required'
 		]);
         $requestData = $request->all();
 
-        $supplier = supplier::findOrFail($id);
-        $supplier->update($requestData);
+        $my_office = my_office::findOrFail($id);
+        $my_office->update($requestData);
 
-        return redirect('supplier')->with('flash_message', 'supplier updated!');
+        return redirect('admin/my_office')->with('flash_message', 'my_office updated!');
     }
 
     /**
@@ -142,13 +149,13 @@ class supplierController extends Controller
      */
     public function destroy($id)
     {
-     if(!Utility::permissionCheck('delete-supplier'))
+     if(!Utility::permissionCheck('delete-my_office'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        supplier::destroy($id);
+        my_office::destroy($id);
 
-        return redirect('supplier')->with('flash_message', 'supplier deleted!');
+        return redirect('admin/my_office')->with('flash_message', 'my_office deleted!');
     }
 }
