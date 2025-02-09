@@ -142,7 +142,7 @@
         {!! $errors->first('password', '<p>:message</p>') !!}
     </div>
 
-   {!! $errors->first('security_admin', '<p>:message</p>') !!}
+
 </div>
 
 </div>

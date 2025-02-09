@@ -28,7 +28,7 @@ class my_office extends Model
     protected $fillable = ['business_id','client_ref', 'division_ref', 'department_ref'];
 
       public function client(){
-        return  $this->belongsTo('App\Models\Client','client_ref','external_ref');
+        return  $this->belongsTo('App\Models\client','client_ref','external_ref');
       }
     public function division(){
         return  $this->belongsTo('App\Models\division','division_ref','ref_code');

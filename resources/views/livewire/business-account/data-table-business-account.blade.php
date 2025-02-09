@@ -32,49 +32,6 @@
             <i class="fa fa-print me-2 text-info"></i> Print
         </button>
 
-        <!-- New Column Visibility Button -->
-        <div class="dropdown">
-            <button class="btn btn-sm btn-soft-info dropdown-toggle" type="button" id="columnVisibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-tasks me-2 text-info"></i> Column Visibility
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="columnVisibilityDropdown">
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colOffice_manager" checked onclick="toggleColumn('office_manager')"> Office Manager
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colName" checked onclick="toggleColumn('name')"> Consultant Name
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colUser_ref" checked onclick="toggleColumn('user_ref')"> STI User Name
-                    </label>
-                </li>
-
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colAddress" checked onclick="toggleColumn('address')"> Address
-                    </label>
-                </li>
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colCompany_phone" checked onclick="toggleColumn('company_phone')"> Contact Number
-                    </label>
-                </li>
-
-                <li>
-                    <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colConsultant_code" checked onclick="toggleColumn('consultant_code')"> Consultant Code
-                    </label>
-                </li>
-
-
-
-            </ul>
-        </div>
     </div>
 
     <div class="row mb-4">
@@ -82,17 +39,7 @@
             <input type="text" wire:model.live.debounce="search"  placeholder="Search..." class="form-control">
 
         </div>
-        <div class="col-md-3">
-            <select  wire:model.lazy="consultant" class="form-control form-select">
-                <option value="">Select Consultant</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <input type="text" wire:model.lazy="created_from" id="created_from" class="form-control" placeholder="From Date">
-        </div>
-        <div class="col-md-3">
-            <input type="text" wire:model.lazy="created_to" id="created_to" class="form-control" placeholder="To Date">
-        </div>
+
     </div>
     <div class="table-bordered table-responsive printable-section">
 
@@ -100,38 +47,18 @@
             <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th data-column="company_name">
-                    <button wire:click="sortBy('official_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Office ID</span>
+                <th data-column="name">
+                    <button wire:click="sortBy('business_account')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start"> Business Name</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'official_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'official_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'business_account' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'business_account' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
-                <th  data-column="external_ref">
-
-                    <button wire:click="sortBy('name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Consultant Name</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-                <th data-column="client_group_id">
-                    <button wire:click="sortBy('client_group_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">STI User Name</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'client_group_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'client_group_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
-
-                <th  data-column="address">
+                <th data-column="ref_code">
                     <button wire:click="sortBy('address')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Address</span>
+                        <span class="text-start"> Address</span>
                         <span class="sort-icons">
                        <i class="fa fa-sort-up {{ $sortField === 'address' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
                        <i class="fa fa-sort-down {{ $sortField === 'address' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
@@ -139,25 +66,29 @@
                     </button>
                 </th>
 
-
-                <th  data-column="company_phone">
-
-                    <button wire:click="sortBy('company_phone')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Contact Number</span>
+                <th data-column="ref_code">
+                    <button wire:click="sortBy('phone')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start"> Phone</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'company_phone' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'company_phone' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'phone' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'phone' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
-                <th  data-column="postcode">
-                    <button wire:click="sortBy('user_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Consultant Code</span>
+
+
+                <th data-column="ref_code">
+                    <button wire:click="sortBy('email')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                        <span class="text-start"> Email</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'user_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'user_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'email' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'email' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
+                </th>
+
+                <th data-column="ref_code">
+                         <span class="text-start"> Status</span>
                 </th>
 
                 <th class="no-print">Actions</th>
@@ -166,15 +97,12 @@
             <tbody>
             @forelse ($data as $item)
                 <tr>
-                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}
-                      @if(isset($item->profile) && $item->profile->status =='Active')  <i class="fa fa-key"></i>  @endif
-                    </td>
-                    <td data-column="office_manager">{{ $item->official_id }}</td>
-                    <td data-column="name">{{ $item->profile->name ?? '' }}</td>
-                    <td data-column="client_group_id">{{ $item->client_group_id ?? '' }}</td>
-                    <td data-column="address">{{ $item->address_line1 ?? '' }}</td>
-                    <td data-column="company_phone">{{ $item->work_telephone ?? '' }}</td>
-                    <td data-column="consultant_code">{{ $item->user_ref ?? '' }}</td>
+                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
+                    <td data-column="name">{{ $item->name }}</td>
+                    <td data-column="ref_code">{{ $item->address }}</td>
+                    <td data-column="ref_code">{{ $item->phone }}</td>
+                    <td data-column="ref_code">{{ $item->profile->email ?? '' }}</td>
+                    <td data-column="ref_code">{{ $item->status }}</td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">
                             <li class="list-inline-item no-print">
@@ -185,26 +113,26 @@
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        @can('view-consultant')
-                                            <li><a href="{{ route('consultant.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                        @can('view-business_account')
+                                            <li><a href="{{ route('business_account.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-consultant')
-                                            <li><a href="{{ route('consultant.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                        @can('update-business_account')
+                                            <li><a href="{{ route('business_account.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 
                                         @endcan
 
-                                        @can('delete-client')
+                                        @can('delete-business_account')
                                             <li>
-                                                <form method="POST" action="{{ route('consultant.destroy', $item->id) }}"
+                                                <form method="POST" action="{{ route('business_account.destroy', $item->id) }}"
                                                       accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     @csrf()
                                                     <button type="submit"
                                                             class="dropdown-item  btn-link text-black btn-xs"
-                                                            title="Delete Client"
+                                                            title="Delete Business account"
                                                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true"></i>  Delete
                                                     </button>
                                                 </form>
@@ -213,12 +141,12 @@
                                     </ul>
                                 </div>
                             </li>
-
+                        </ul>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9" class="text-center">No data available</td>
+                    <td colspan="7" class="text-center">No data available</td>
                 </tr>
             @endforelse
             </tbody>

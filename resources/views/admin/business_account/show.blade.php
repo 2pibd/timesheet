@@ -13,10 +13,10 @@
                     <section>
                         <header>
                             <h2 class="text-lg font-medium text-gray-900">
-                                Show my_office
+                                Show business_account
                             </h2>
                             <div class="flex justify-end mt-5">
-                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('my_office.index') }}" title="Back">< Back</a>
+                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('business_account.index') }}" title="Back">< Back</a>
                             </div>
                         </header>
                         </br>
@@ -24,9 +24,9 @@
                         <table class="shadow-lg bg-white">
                             <tr>
                                 <td class="border px-8 py-4 font-bold">ID</td>
-                                <td class="border px-8 py-4">{{ $my_office->id }}</td>
+                                <td class="border px-8 py-4">{{ $business_account->id }}</td>
                             </tr>
-                            <tr><td class="border px-8 py-4 font-bold"> my_office Name </td><td class="border px-8 py-4"> {{ $my_office->my_office_name }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Emp Ref </td><td class="border px-8 py-4"> {{ $my_office->emp_ref }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Division Ref </td><td class="border px-8 py-4"> {{ $my_office->division_ref }} </td></tr>
+                            <tr><td class="border px-8 py-4 font-bold"> Business Name </td><td class="border px-8 py-4"> {{ $business_account->business_name }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Phone </td><td class="border px-8 py-4"> {{ $business_account->phone }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Email </td><td class="border px-8 py-4"> {{ $business_account->email }} </td></tr>
                         </table>
 
                     </section>

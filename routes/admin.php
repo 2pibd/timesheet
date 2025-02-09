@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\assignmentController;
 use App\Http\Controllers\boundary_validationController;
+use App\Http\Controllers\business_accountController;
 use App\Http\Controllers\consultantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\departmentController;
@@ -351,6 +352,17 @@ use Illuminate\Support\Facades\Route;
          'edit' => 'my_office.edit',
          'update' => 'my_office.update',
          'destroy' => 'my_office.destroy'
+     ]);
+
+
+     Route::resource('business_account',  business_accountController::class)->names([
+         'index' => 'business_account.index',
+         'create' => 'business_account.create',
+         'store' => 'business_account.store',
+         'show' => 'business_account.show',
+         'edit' => 'business_account.edit',
+         'update' => 'business_account.update',
+         'destroy' => 'business_account.destroy'
      ]);
 
      Route::resource('department',  departmentController::class)->names([

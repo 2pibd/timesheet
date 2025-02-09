@@ -49,7 +49,7 @@
 
                         @include ('/admin/.assignment.form', ['formMode' => 'edit'])
                     </form>
-                    </section>
+
 
                 </div>
             </div>
