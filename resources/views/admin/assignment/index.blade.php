@@ -25,8 +25,6 @@
                                     class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>
                         @endcan
 
-
-
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body" >

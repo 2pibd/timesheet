@@ -5,6 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\awr_type;
+use App\Models\client;
+use App\Models\consultant;
+use App\Models\Country;
+use App\Models\department;
+use App\Models\division;
+use App\Models\engagement_type;
+use App\Models\name_title;
+use App\Models\placement_type;
+use App\Models\supplier;
+use App\Models\User;
+use App\Models\work_type;
 use App\Utility\Utility;
 use App\Models\worker;
 use Illuminate\Http\Request;
@@ -23,42 +35,8 @@ class workerController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $keyword = $request->get('search');
-        $perPage = 25;
 
-        if (!empty($keyword)) {
-            $worker = worker::where('user_login_id', 'LIKE', "%$keyword%")
-                ->orWhere('emp_ref', 'LIKE', "%$keyword%")
-                ->orWhere('personal_ref', 'LIKE', "%$keyword%")
-                ->orWhere('first_forename', 'LIKE', "%$keyword%")
-                ->orWhere('second_forename', 'LIKE', "%$keyword%")
-                ->orWhere('third_forename', 'LIKE', "%$keyword%")
-                ->orWhere('surname', 'LIKE', "%$keyword%")
-                ->orWhere('paye_code', 'LIKE', "%$keyword%")
-                ->orWhere('ni_number', 'LIKE', "%$keyword%")
-                ->orWhere('gender', 'LIKE', "%$keyword%")
-                ->orWhere('address_line1', 'LIKE', "%$keyword%")
-                ->orWhere('address_line2', 'LIKE', "%$keyword%")
-                ->orWhere('address_line3', 'LIKE', "%$keyword%")
-                ->orWhere('address_line4', 'LIKE', "%$keyword%")
-                ->orWhere('address_line5', 'LIKE', "%$keyword%")
-                ->orWhere('post_code', 'LIKE', "%$keyword%")
-                ->orWhere('country_id', 'LIKE', "%$keyword%")
-                ->orWhere('tel_number', 'LIKE', "%$keyword%")
-                ->orWhere('mobile_number', 'LIKE', "%$keyword%")
-                ->orWhere('email', 'LIKE', "%$keyword%")
-                ->orWhere('dob', 'LIKE', "%$keyword%")
-                ->orWhere('worker_type', 'LIKE', "%$keyword%")
-                ->orWhere('awr_type', 'LIKE', "%$keyword%")
-                ->orWhere('non_cis_utr', 'LIKE', "%$keyword%")
-                ->orWhere('known_as', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $worker = worker::latest()->paginate($perPage);
-        }
-
-        return view('/admin/.worker.index', compact('worker'));
+        return view('/admin/.worker.index' );
     }
 
     /**
@@ -72,8 +50,17 @@ class workerController extends Controller
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
-
-        return view('/admin/.worker.create');
+        $data['employers'] = client::get();
+        $data['engagement_types'] = engagement_type::get();
+        $data['worker_types'] = work_type:: get();
+        $data['awr_types'] = awr_type:: get();
+        $data['countries'] = Country::where('is_default','1')->get();
+        $data['divisions'] = division::get();
+        $data['departments'] = department::get();
+        $data['suppliers'] = supplier::get();
+        $data['consultants'] = consultant::get();
+        $data['name_titles'] = name_title::all();
+        return view('/admin/.worker.create', $data);
     }
 
     /**
@@ -90,13 +77,29 @@ class workerController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'user_login_id' => 'required'
+			'employer_id' => 'required',
+			'email' => 'required',
 		]);
+
+        $userData = $request->all();
+        $userData['name'] =  $request->name_title . '  ' .  $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+
+        $userData['status'] =  $request->status ? 'Active': 'Inactive';
+
+        $userData['remember_token'] = md5(time());
+        $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : '';
+
+        $user = User::create($userData);
+        $user->syncRoles('Consultant');
+
+
         $requestData = $request->all();
-        
+
+        $requestData['user_id'] = $user->id;
         worker::create($requestData);
 
-        return redirect('worker')->with('flash_message', 'worker added!');
+
+        return redirect('admin/worker')->with('flash_message', 'worker added!');
     }
 
     /**
@@ -133,9 +136,18 @@ class workerController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $worker = worker::findOrFail($id);
-
-        return view('/admin/.worker.edit', compact('worker'));
+        $data['worker'] = worker::findOrFail($id);
+        $data['employers'] = client::get();
+        $data['engagement_types'] = engagement_type::get();
+        $data['worker_types'] = work_type:: get();
+        $data['awr_types'] = awr_type:: get();
+        $data['countries'] = Country::where('is_default','1')->get();
+        $data['divisions'] = division::get();
+        $data['departments'] = department::get();
+        $data['suppliers'] = supplier::get();
+        $data['consultants'] = consultant::get();
+        $data['name_titles'] = name_title::all();
+        return view('/admin/.worker.edit', $data);
     }
 
     /**
@@ -156,14 +168,31 @@ class workerController extends Controller
 
 
         $this->validate($request, [
-			'user_login_id' => 'required'
+			'employer_id' => 'required',
+            'email' => 'required',
 		]);
         $requestData = $request->all();
-        
-        $worker = worker::findOrFail($id);
-        $worker->update($requestData);
 
-        return redirect('worker')->with('flash_message', 'worker updated!');
+        $worker = worker::findOrFail($id);
+
+        if($worker) {
+            $userData = $request->all();
+            $userData['name'] =   $request->name_title . '  ' .  $request->first_name . '  ' . $request->middle_name . '  ' . $request->last_name;
+            $userData['status'] =  $request->status ? 'Active': 'Inactive';
+            $userData['remember_token'] = md5(time());
+            $userData['password'] = (!empty($request->password)) ? bcrypt($request->password) : (isset($worker->profile)? $worker->profile->password : '');
+
+            $user = User::updateOrCreate(
+                [
+                    'id'=>$worker->user_id
+                ],
+                $userData
+            );
+            $requestData['user_id'] = $user->id;
+            //  $consultant->profile->update($userData);
+        }
+        $worker->update($requestData);
+        return redirect('admin/worker')->with('flash_message', 'worker updated!');
     }
 
     /**
@@ -182,6 +211,6 @@ class workerController extends Controller
 
         worker::destroy($id);
 
-        return redirect('worker')->with('flash_message', 'worker deleted!');
+        return redirect('admin/worker')->with('flash_message', 'worker deleted!');
     }
 }

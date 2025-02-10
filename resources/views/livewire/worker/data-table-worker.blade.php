@@ -76,7 +76,7 @@
                 </li>
                 <li>
                     <label class="dropdown-item">
-                        <input type="checkbox" class="form-check-input" id="colWorker_type" checked onclick="toggleColumn('worker_type')"> Worker Type
+                        <input type="checkbox" class="form-check-input" id="colWorker_type" checked onclick="toggleColumn('worker_type')"> Work Type
                     </label>
                 </li>
 
@@ -116,11 +116,11 @@
             <tr>
                 <th>#</th>
                 <th data-column="emp_ref">
-                    <button wire:click="sortBy('emp_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                    <button wire:click="sortBy('employer_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Employer Ref</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'emp_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'emp_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'employer_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'employer_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -165,15 +165,6 @@
                     </button>
                 </th>
 
-                <th data-column="user_login_id">
-                    <button wire:click="sortBy('user_login_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">User Login ID</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'user_login_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'user_login_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
 
                 <th data-column="dob">
                     <button wire:click="sortBy('dob')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
@@ -215,13 +206,13 @@
             @forelse ($data as $key=>$item)
                 <tr>
                     <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
-                    <td data-column="emp_ref">{{ $item->emp_ref }}</td>
+                    <td data-column="employer_id">{{ $item->client->external_ref ?? '' }}</td>
                     <td data-column="personal_ref">{{ $item->personal_ref }}</td>
-                    <td data-column="first_forename">{{ $item->first_forename ?? '' }}</td>
+                    <td data-column="first_forename">{{ $item->name ?? '' }}</td>
                     <td data-column="address_line1">{{ $item->address_line1 }}</td>
                     <td data-column="post_code">{{ $item->post_code }}</td>
-                    <td data-column="user_login_id">{{ $item->user_login_id }}</td>
-                    <td data-column="worker_type">{{ $item->worker_type }}</td>
+                    <td data-column="dob">{{ $item->dob }}</td>
+                    <td data-column="worker_type">{{ $item->worktype->type ?? '' }}</td>
                     <td data-column="status">{{ $item->status }}</td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">

@@ -21,7 +21,7 @@ class DataTableSupplier extends Component
     public $created_to = '';
     public $perPage  ;
 
-    public $sortField = 'tplname'; // Default sort field
+    public $sortField = 'business_name'; // Default sort field
     public $sortDirection = 'asc'; // Default sort direction
 
 
@@ -45,10 +45,9 @@ class DataTableSupplier extends Component
         $query = supplier::query();
 
         if (!empty($this->search)) {
-            $query->where('user_ref', 'like', '%' . $this->search . '%')
-                ->orWhere('access_code', 'like', '%' . $this->search . '%')
-                ->orWhere('work_telephone', 'like', '%' . $this->search . '%')
-                ->orWhere('mobile_number', 'like', '%' . $this->search . '%');
+            $query->where('business_name', 'like', '%' . $this->search . '%')
+                ->orWhere('suppli', 'like', '%' . $this->search . '%')
+                ->orWhere('contact_number', 'like', '%' . $this->search . '%') ;
         }
 
 

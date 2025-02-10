@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    Client
+    Assignment
 @endsection
 @section('content')
 
@@ -9,7 +9,7 @@
             Menu
         @endslot
         @slot('title')
-            Create assignment
+            Create Assignment
         @endslot
     @endcomponent
 
@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">New assignment</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">New Assignment</h4>
                     <div class="flex-shrink-0">
                         <a href="{{url('admin/assignment')}}" class="btn btn-info btn-sm" title="Back"><i
                                 class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>

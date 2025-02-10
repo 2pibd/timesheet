@@ -21,7 +21,7 @@ class DataTableWorker extends Component
     public $created_to = '';
     public $perPage  ;
 
-    public $sortField = 'tplname'; // Default sort field
+    public $sortField = 'first_name'; // Default sort field
     public $sortDirection = 'asc'; // Default sort direction
 
 
@@ -46,8 +46,11 @@ class DataTableWorker extends Component
         $query = worker::query();
 
         if (!empty($this->search)) {
-            $query->where('tplname', 'like', '%' . $this->search . '%')
-                ->orWhere('subject', 'like', '%' . $this->search . '%');
+            $query->whereRaw("CONCAT_WS(' ', first_name, middle_name, last_name, surname) LIKE ?", ["%{$this->search }%"])
+                ->orWhere('employer_id', 'like', '%' . $this->search . '%')
+                ->orWhere('email', 'like', '%' . $this->search . '%')
+                ->orWhere('tel_number', 'like', '%' . $this->search . '%')
+                ->orWhere('mobile_number', 'like', '%' . $this->search . '%');
         }
 
         if (!empty($this->status)) {
@@ -60,7 +63,7 @@ class DataTableWorker extends Component
             $query->whereBetween('created_at', [$created_from, $created_to]);
         }
 
-        $query->orderBy($this->sortField, $this->sortDirection) ;// Apply sorting
+        $query->selectRaw("*, CONCAT_WS(' ', first_name, middle_name, last_name, surname) as name")->orderBy($this->sortField, $this->sortDirection) ;// Apply sorting
 
         $data  = $query->latest()->paginate($this->perPage);
 

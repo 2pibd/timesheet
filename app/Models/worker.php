@@ -25,7 +25,23 @@ class worker extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_login_id', 'emp_ref', 'personal_ref', 'first_forename', 'second_forename', 'third_forename', 'surname', 'paye_code', 'ni_number', 'gender', 'address_line1', 'address_line2', 'address_line3', 'address_line4', 'address_line5', 'post_code', 'country_id', 'tel_number', 'mobile_number', 'email', 'dob', 'worker_type', 'awr_type', 'non_cis_utr', 'known_as', 'status'];
+    protected $fillable = ['user_id', 'employer_id','department_id','division_id','supplier_id','consultant_id',
+        'employer_type_id', 'personal_ref', 'name_title', 'first_name', 'middle_name', 'last_name', 'surname', 'paye_code',
+        'ni_number', 'gender',  'address_line1', 'address_line2', 'address_line3', 'address_line4', 'address_line5', 'post_code', 'country_id',
+        'tel_number', 'mobile_number', 'email', 'dob', 'work_type', 'awr_type', 'non_cis_utr', 'known_as', 'status'];
 
-    
+    public function client(){
+        return  $this->belongsTo('App\Models\client','employer_id','external_ref');
+    }
+
+    public function supplier_type(){
+        return  $this->belongsTo('App\Models\placement_type', 'supplier_type');
+    }
+    public function profile(){
+        return $this->belongsTo('App\Models\User','user_id');
+    }
+
+    public function worktype(){
+        return  $this->belongsTo('App\Models\work_type', 'work_type');
+    }
 }

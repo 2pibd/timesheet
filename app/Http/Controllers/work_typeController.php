@@ -5,16 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-use App\Models\client;
-use App\Models\department;
-use App\Models\division;
-use App\Models\placement_type;
 use App\Utility\Utility;
-use App\Models\supplier;
-use Carbon\Carbon;
+use App\Models\work_type;
 use Illuminate\Http\Request;
 
-class supplierController extends Controller
+class work_typeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,13 +18,22 @@ class supplierController extends Controller
      */
     public function index(Request $request)
     {
-     if(!Utility::permissionCheck('view-supplier'))
+     if(!Utility::permissionCheck('view-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
+        $keyword = $request->get('search');
+        $perPage = 25;
 
-        return view('/admin/.supplier.index' );
+        if (!empty($keyword)) {
+            $work_type = work_type::where('title', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $work_type = work_type::latest()->paginate($perPage);
+        }
+
+        return view('/admin/.work_type.index', compact('work_type'));
     }
 
     /**
@@ -39,15 +43,12 @@ class supplierController extends Controller
      */
     public function create()
     {
-    if(!Utility::permissionCheck('create-supplier'))
+    if(!Utility::permissionCheck('create-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
-        $data['employers'] = client::get();
-        $data['placement_types'] = placement_type::where('section','Supplier')->get();
-        $data['divisions'] = division::get();
-        $data['departments'] = department::get();
-        return view('/admin/.supplier.create',$data);
+
+        return view('/admin/.work_type.create');
     }
 
     /**
@@ -59,20 +60,18 @@ class supplierController extends Controller
      */
     public function store(Request $request)
     {
-     if(!Utility::permissionCheck('create-supplier'))
+     if(!Utility::permissionCheck('create-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'employer_id' => 'required'
+			'title' => 'required'
 		]);
         $requestData = $request->all();
-        if (isset($request->incorporate_date)) $requestData['incorporate_date'] = Carbon::createFromFormat('d/m/Y', $request->incorporate_date)->format('Y-m-d');
-        if (isset($request->schedule_date)) $requestData['schedule_date'] = Carbon::createFromFormat('d/m/Y', $request->schedule_date)->format('Y-m-d');
+        
+        work_type::create($requestData);
 
-        supplier::create($requestData);
-
-        return redirect('admin/supplier')->with('flash_message', 'supplier added!');
+        return redirect('work_type')->with('flash_message', 'work_type added!');
     }
 
     /**
@@ -84,14 +83,14 @@ class supplierController extends Controller
      */
     public function show($id)
     {
-    if(!Utility::permissionCheck('view-supplier'))
+    if(!Utility::permissionCheck('view-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $supplier = supplier::findOrFail($id);
+        $work_type = work_type::findOrFail($id);
 
-        return view('/admin/.supplier.show', compact('supplier'));
+        return view('/admin/.work_type.show', compact('work_type'));
     }
 
     /**
@@ -104,17 +103,14 @@ class supplierController extends Controller
     public function edit($id)
     {
 
-     if(!Utility::permissionCheck('update-supplier'))
+     if(!Utility::permissionCheck('update-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $data['supplier'] = supplier::findOrFail($id);
-        $data['employers'] = client::get();
-        $data['placement_types'] = placement_type::where('section','Supplier')->get();
-        $data['divisions'] = division::get();
-        $data['departments'] = department::get();
-        return view('/admin/.supplier.edit', $data);
+        $work_type = work_type::findOrFail($id);
+
+        return view('/admin/.work_type.edit', compact('work_type'));
     }
 
     /**
@@ -128,23 +124,21 @@ class supplierController extends Controller
     public function update(Request $request, $id)
     {
 
-     if(!Utility::permissionCheck('update-supplier'))
+     if(!Utility::permissionCheck('update-work_type'))
                 {
                     return back()->with('error',Utility::getPermissionMsg());
                 }
 
 
         $this->validate($request, [
-			'employer_id' => 'required'
+			'title' => 'required'
 		]);
         $requestData = $request->all();
-        if (isset($request->incorporate_date)) $requestData['incorporate_date'] = Carbon::createFromFormat('d/m/Y', $request->incorporate_date)->format('Y-m-d');
-        if (isset($request->schedule_date)) $requestData['schedule_date'] = Carbon::createFromFormat('d/m/Y', $request->schedule_date)->format('Y-m-d');
+        
+        $work_type = work_type::findOrFail($id);
+        $work_type->update($requestData);
 
-        $supplier = supplier::findOrFail($id);
-        $supplier->update($requestData);
-
-        return redirect('admin/supplier')->with('flash_message', 'supplier updated!');
+        return redirect('work_type')->with('flash_message', 'work_type updated!');
     }
 
     /**
@@ -156,13 +150,13 @@ class supplierController extends Controller
      */
     public function destroy($id)
     {
-     if(!Utility::permissionCheck('delete-supplier'))
+     if(!Utility::permissionCheck('delete-work_type'))
             {
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        supplier::destroy($id);
+        work_type::destroy($id);
 
-        return redirect('admin/supplier')->with('flash_message', 'supplier deleted!');
+        return redirect('work_type')->with('flash_message', 'work_type deleted!');
     }
 }

@@ -27,33 +27,8 @@ class consultantController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
 
-        $keyword = $request->get('search');
-        $perPage = 25;
 
-        if (!empty($keyword)) {
-            $consultant = consultant::where('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('user_ref', 'LIKE', "%$keyword%")
-                ->orWhere('ref_code', 'LIKE', "%$keyword%")
-                ->orWhere('access_code', 'LIKE', "%$keyword%")
-                ->orWhere('official_id', 'LIKE', "%$keyword%")
-                ->orWhere('work_telephone', 'LIKE', "%$keyword%")
-                ->orWhere('mobile_number', 'LIKE', "%$keyword%")
-                ->orWhere('address_line1', 'LIKE', "%$keyword%")
-                ->orWhere('address_line2', 'LIKE', "%$keyword%")
-                ->orWhere('address_line3', 'LIKE', "%$keyword%")
-                ->orWhere('address_line4', 'LIKE', "%$keyword%")
-                ->orWhere('post_code', 'LIKE', "%$keyword%")
-                ->orWhere('office_manager', 'LIKE', "%$keyword%")
-                ->orWhere('security_admin', 'LIKE', "%$keyword%")
-                ->orWhere('read_only_access', 'LIKE', "%$keyword%")
-                ->orWhere('template_id', 'LIKE', "%$keyword%")
-                ->orWhere('language_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $consultant = consultant::latest()->paginate($perPage);
-        }
-
-        return view('/admin/.consultant.index', compact('consultant'));
+        return view('/admin/.consultant.index' );
     }
 
     /**

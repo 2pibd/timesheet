@@ -1,15 +1,15 @@
 @extends('admin.layouts.master')
 @section('title')
-   Edit Client
+    Assignment
 @endsection
 @section('content')
 
     @component('admin.components.breadcrumb')
         @slot('li_1')
-           Client
+            Assignment
         @endslot
         @slot('title')
-           Edit Client
+           Edit Assignment
         @endslot
     @endcomponent
 

@@ -109,11 +109,11 @@
                 </th>
                 <th  data-column="external_ref">
 
-                    <button wire:click="sortBy('external_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                    <button wire:click="sortBy('business_name')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Supplier Name</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'external_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'external_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'business_name' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'business_name' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -127,18 +127,8 @@
                     </button>
                 </th>
 
-                <th  data-column="address">
-                    <button wire:click="sortBy('address')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
-                        <span class="text-start">Business Name</span>
-                        <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'address' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'address' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
-                    </span>
-                    </button>
-                </th>
 
-
-                <th  data-column="company_phone">
+                <th  data-column="contact_number">
                     <button wire:click="sortBy('contact_number')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Contact Number</span>
                         <span class="sort-icons">
@@ -148,7 +138,8 @@
                     </button>
                 </th>
 
-                <th  data-column="postcode">
+
+                <th  data-column="address_line1">
                     <button wire:click="sortBy('address_line1')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Address</span>
                         <span class="sort-icons">
@@ -174,13 +165,13 @@
             <tbody>
             @forelse ($data as $item)
                 <tr>
-                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }} <i class="fa fa-key"></i> </td>
-                    <td data-column="office_manager">{{ $item->office_manager }}</td>
-                    <td data-column="name">{{ $item->name }}</td>
-                    <td data-column="client_group_id">{{ $item->client_group_id ?? '' }}</td>
-                    <td data-column="address">{{ $item->address_line1 ?? '' }}</td>
-                    <td data-column="company_phone">{{ $item->work_telephone ?? '' }}</td>
-                    <td data-column="consultant_code">{{ $item->consultant_code ?? '' }}</td>
+                    <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }} </td>
+                    <td data-column="supplier_ref">{{ $item->supplier_ref }}</td>
+                    <td data-column="business_name">{{ $item->business_name }}</td>
+                    <td data-column="supplier_type">{{ $item->supplier_type->title ?? '' }}</td>
+                    <td data-column="contact_number">{{ $item->contact_number ?? '' }}</td>
+                    <td data-column="address_line1">{{ $item->address_line1 ?? '' }}</td>
+                    <td data-column="post_code">{{ $item->post_code ?? '' }}</td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">
                             <li class="list-inline-item no-print">
@@ -195,7 +186,7 @@
                                             <li><a href="{{ route('supplier.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
-                                        @can('update-v')
+                                        @can('update-supplier')
                                             <li><a href="{{ route('supplier.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
@@ -224,7 +215,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9" class="text-center">No data available</td>
+                    <td colspan="10" class="text-center">No data available</td>
                 </tr>
             @endforelse
             </tbody>

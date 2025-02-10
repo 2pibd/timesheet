@@ -9,7 +9,7 @@
             Menu
         @endslot
         @slot('title')
-            Edit worker #{{ $invoice->id }}
+            Edit worker #{{ $worker->id }}
         @endslot
     @endcomponent
     <div class="row">
@@ -36,7 +36,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('worker.update', $worker->id) }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('worker.update', $worker->id) }}" id="workerForm" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf()
 

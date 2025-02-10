@@ -90,3 +90,8 @@ Route::get('/cc', function() {
 
 
 
+
+Route::resource('engagement_type', 'engagement_typeController');
+Route::resource('awr_type', 'awr_typeController');
+Route::resource('worker_type', 'worker_typeController');
+Route::resource('work_type', 'work_typeController');

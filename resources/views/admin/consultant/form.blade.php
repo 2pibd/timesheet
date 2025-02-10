@@ -90,7 +90,7 @@
         {!! $errors->first('access_code', '<p>:message</p>') !!}
     </div>
     <div class="mb-3">
-        <label for="official_id" class="block font-medium text-sm text-gray-700">{{ 'official Id' }}</label>
+        <label for="official_id" class="block font-medium text-sm text-gray-700">{{ 'Official ID' }}</label>
         <input class="form-control" id="officeial_id" name="official_id" type="text" value="{{ isset($consultant->official_id) ? $consultant->official_id : ''}}" >
         {!! $errors->first('official_id', '<p>:message</p>') !!}
     </div>

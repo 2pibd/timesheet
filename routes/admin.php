@@ -20,6 +20,7 @@ use App\Http\Controllers\mailController;
 use App\Http\Controllers\menuController;
 use App\Http\Controllers\my_officeController;
 use App\Http\Controllers\online_messageController;
+use App\Http\Controllers\placement_typeController;
 use App\Http\Controllers\segment_combination_setupController;
 use App\Http\Controllers\segment_head_detailsController;
 use App\Http\Controllers\segment_headController;
@@ -375,6 +376,15 @@ use Illuminate\Support\Facades\Route;
          'destroy' => 'department.destroy'
      ]);
 
+     Route::resource('placement_type',  placement_typeController::class)->names([
+         'index' => 'placement_type.index',
+         'create' => 'placement_type.create',
+         'store' => 'placement_type.store',
+         'show' => 'placement_type.show',
+         'edit' => 'placement_type.edit',
+         'update' => 'placement_type.update',
+         'destroy' => 'placement_type.destroy'
+     ]);
 
 
      Route::resource('segment_head',  segment_headController ::class)->names([

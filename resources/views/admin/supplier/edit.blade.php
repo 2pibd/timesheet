@@ -1,24 +1,33 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('admin.layouts.master')
+@section('title')
+    @lang('translation.edit_email_template')
+@endsection
+@section('content')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+    @component('admin.components.breadcrumb')
+        @slot('li_1')
+            Menu
+        @endslot
+        @slot('title')
+            Edit Supplier #{{ $supplier->id }}
+        @endslot
+    @endcomponent
 
-                    <section>
-                        <header>
-                            <h2 class="text-lg font-medium text-gray-900">
-                                Edit supplier #{{ $supplier->id }}
-                            </h2>
-                            <div class="flex justify-end mt-5">
-                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('supplier.index') }}" title="Back">< Back</a>
-                            </div>
-                        </header>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1"> Edit Supplier #{{ $supplier->id }}</h4>
+                    <div class="flex-shrink-0">
+                        <a href="{{route('supplier.create')}}" class="btn btn-primary btn-sm"><i
+                                class="fa fa-plus"></i>&nbsp;&nbsp;Create New</a>
+                        <a href="{{route('supplier.index')}}" class="btn btn-info btn-sm" title="Back"><i
+                                class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+
+
 
                         @if ($errors->any())
                             <ul class="text-sm text-red-600 space-y-1 mt-2">
@@ -34,10 +43,10 @@
 
                             @include ('/admin/.supplier.form', ['formMode' => 'edit'])
                         </form>
-                    </section>
+
 
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

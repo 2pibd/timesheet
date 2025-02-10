@@ -31,7 +31,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ route('worker.store') }}" class="mt-6 space-y-6" accept-charset="UTF-8" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('worker.store') }}" class="mt-6 space-y-6" id="workerForm" accept-charset="UTF-8" enctype="multipart/form-data">
                             @csrf()
                             @include ('/admin/.worker.form', ['formMode' => 'create'])
                         </form>
