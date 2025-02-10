@@ -1,12 +1,14 @@
 <div class="mb-3">
-    <label for="employer_ref" class="block font-medium text-sm text-gray-700">{{ 'Employer Ref.' }}</label>
-    <select class="form-select" name="employer_ref">
+    <label for="employer_id" class="block font-medium text-sm text-gray-700">{{ 'Employer Ref.*' }}</label>
+    <select class="form-select" name="employer_id">
         <option value="">--Select--</option>
         @foreach($employers as $item)
-            <option @if((isset($leaving_detail->employer_ref) && $leaving_detail->employer_ref==$item->id)  ) selected @endif value="{{$item->id}}">{{$item->emp_ref}}</option>
+            <option
+                value="{{$item->id}}" {{(isset($leaving_detail->employer_id) && ($leaving_detail->employer_id == $item->id) )? 'selected': ''}} >{{$item->external_ref}} :: {{$item->company_name}}</option>
+
         @endforeach
     </select>
-     {!! $errors->first('employer_ref', '<p>:message</p>') !!}
+     {!! $errors->first('employer_id', '<p>:message</p>') !!}
 </div>
 <div class="mb-3">
     <label for="personal_ref" class="block font-medium text-sm text-gray-700">{{ 'Personal Ref' }}</label>

@@ -103,11 +103,11 @@
             <tr>
                 <th>#</th>
                 <th data-column="employer_ref">
-                    <button wire:click="sortBy('employer_ref')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
+                    <button wire:click="sortBy('employer_id')" class="btn btn-link p-0 d-flex justify-content-between align-items-center w-100">
                         <span class="text-start">Employer Ref</span>
                         <span class="sort-icons">
-                       <i class="fa fa-sort-up {{ $sortField === 'employer_ref' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
-                       <i class="fa fa-sort-down {{ $sortField === 'employer_ref' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-up {{ $sortField === 'employer_id' && $sortDirection === 'asc' ? 'active-icon' : 'light-icon' }}"></i>
+                       <i class="fa fa-sort-down {{ $sortField === 'employer_id' && $sortDirection === 'desc' ? 'active-icon' : 'light-icon' }}"></i>
                     </span>
                     </button>
                 </th>
@@ -162,9 +162,10 @@
             @forelse ($data as $key=>$item)
                 <tr>
                     <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
-                    <td data-column="emp_ref">{{ $item->employer_ref }}</td>
+                    <td data-column="emp_ref">{{ $item->client->company_name ?? '' }} ({{ $item->client->external_ref ?? '' }})</td>
                     <td data-column="personal_ref">{{ $item->personal_ref }}</td>
                     <td data-column="leaving_reason">{{ $item->leaving_date }}</td>
+                    <td data-column="leaving_reason">{{ $item->leaving_reason }}</td>
                     <td data-column="status">{{ $item->status }}</td>
                     <td nowrap class="no-print">
                         <ul class="list-inline hstack gap-2 mb-0">
@@ -177,11 +178,11 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         @can('view-leaving_details')
-                                            <li><a href="{{ route('worker.show', $item->id) }}" class="dropdown-item view-item-btn"
+                                            <li><a href="{{ route('leaving_details.show', $item->id) }}" class="dropdown-item view-item-btn"
                                                    title="View"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>
                                         @endcan
                                         @can('update-leaving_details')
-                                            <li><a href="{{ route('worker.edit', $item->id) }}" class="dropdown-item edit-item-btn"
+                                            <li><a href="{{ route('leaving_details.edit', $item->id) }}" class="dropdown-item edit-item-btn"
                                                    title="Edit"> <i  class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                 </a></li>
 

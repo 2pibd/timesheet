@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-4 col-sm-12">
         <div class="mb-3 d-flex">
             <label for="consultant_id" class="block font-medium text-sm text-gray-700 w-25">{{ 'Consultant' }}</label>
             <div class="w-75"><input class="form-control" id="consultant_id" name="consultant_id" type="text"
@@ -105,6 +105,10 @@
             {!! $errors->first('auth_group', '<p>:message</p>') !!}
             </div>
         </div>
+    </div>
+
+
+    <div class="col-md-4 col-sm-12">
         <div class="mb-3 d-flex">
             <label for="prev_service" class="block font-medium text-sm text-gray-700 w-25">{{ 'Prev Service' }}</label>
             <div class="w-75"><input class="form-control" id="prev_service" name="prev_service" type="text"
@@ -174,7 +178,7 @@
     </div>
 
 
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-4 col-sm-12">
         <div class="mb-3 d-flex">
             <label for="contact_name" class="block font-medium text-sm text-gray-700 w-25">{{ 'Contact Name' }}</label>
             <div class="w-75"><input class="form-control" id="contact_name" name="contact_name" type="text"

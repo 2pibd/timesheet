@@ -31,7 +31,7 @@ class worker extends Model
         'tel_number', 'mobile_number', 'email', 'dob', 'work_type', 'awr_type', 'non_cis_utr', 'known_as', 'status'];
 
     public function client(){
-        return  $this->belongsTo('App\Models\client','employer_id','external_ref');
+        return  $this->belongsTo('App\Models\client', 'employer_id');
     }
 
     public function supplier_type(){

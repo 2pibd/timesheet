@@ -1,25 +1,31 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('admin.layouts.master')
+@section('title')
+    Assignment
+@endsection
+@section('content')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="w-full">
+    @component('admin.components.breadcrumb')
+        @slot('li_1')
+            Assignment
+        @endslot
+        @slot('title')
+            Show Assignment
+        @endslot
+    @endcomponent
 
-                    <section>
-                        <header>
-                            <h2 class="text-lg font-medium text-gray-900">
-                                Show assignment
-                            </h2>
-                            <div class="flex justify-end mt-5">
-                                <a class="px-2 py-1 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600" href="{{ route('assignment.index') }}" title="Back">< Back</a>
-                            </div>
-                        </header>
-                        </br>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Show Assignment #{{ $assignment->id }}</h4>
+                    <div class="flex-shrink-0">
+
+                        <a href="{{route('assignment.index')}}" class="btn btn-info btn-sm" title="Back"><i
+                                class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+
 
                         <table class="shadow-lg bg-white">
                             <tr>
@@ -29,10 +35,10 @@
                             <tr><td class="border px-8 py-4 font-bold"> Consultent Id </td><td class="border px-8 py-4"> {{ $assignment->consultent_id }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Worker Surname </td><td class="border px-8 py-4"> {{ $assignment->worker_surname }} </td></tr><tr><td class="border px-8 py-4 font-bold"> Worker Forename </td><td class="border px-8 py-4"> {{ $assignment->worker_forename }} </td></tr>
                         </table>
 
-                    </section>
 
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+@endsection

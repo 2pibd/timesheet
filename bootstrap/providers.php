@@ -1,13 +1,14 @@
 <?php
 
 return [
+    Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
     App\Providers\AppServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
-    Spatie\Activitylog\ActivitylogServiceProvider::class,
-    Yajra\DataTables\DataTablesServiceProvider::class,
-    Milon\Barcode\BarcodeServiceProvider::class,
+    App\Providers\SettingsServiceProvider::class,
     Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
-    \Torann\GeoIP\GeoIPServiceProvider::class,
-    Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
-];
+    Milon\Barcode\BarcodeServiceProvider::class,
+    Spatie\Activitylog\ActivitylogServiceProvider::class,
+    Torann\GeoIP\GeoIPServiceProvider::class,
+    Yajra\DataTables\DataTablesServiceProvider::class,
 
+];

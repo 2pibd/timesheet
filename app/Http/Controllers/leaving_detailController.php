@@ -6,7 +6,8 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-use App\Models\employer;
+
+use App\Models\client;
 use App\Utility\Utility;
 use App\Models\leaving_detail;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class leaving_detailController extends Controller
             }
 
         $data['status'] = Helper::getEnumValues('leaving_details','status');
-        $data['employers'] = employer::get();
+        $data['employers'] = client::get();
         return view('/admin/.leaving_details.create', $data);
     }
 
@@ -73,13 +74,13 @@ class leaving_detailController extends Controller
                 return back()->with('error',Utility::getPermissionMsg());
             }
         $this->validate($request, [
-			'employer_ref' => 'required'
+			'employer_id' => 'required'
 		]);
         $requestData = $request->all();
 
         leaving_detail::create($requestData);
 
-        return redirect('leaving_details')->with('flash_message', 'leaving_detail added!');
+        return redirect('admin/leaving_details')->with('flash_message', 'leaving_detail added!');
     }
 
     /**
@@ -118,7 +119,7 @@ class leaving_detailController extends Controller
 
         $data['leaving_detail'] = leaving_detail::findOrFail($id);
         $data['status'] = Helper::getEnumValues('leaving_details','status');
-        $data['employers'] = employer::get();
+        $data['employers'] = client::get();
         return view('/admin/.leaving_details.edit',  $data);
     }
 
@@ -140,14 +141,14 @@ class leaving_detailController extends Controller
 
 
         $this->validate($request, [
-			'employer_ref' => 'required'
+			'employer_id' => 'required'
 		]);
         $requestData = $request->all();
 
         $leaving_detail = leaving_detail::findOrFail($id);
         $leaving_detail->update($requestData);
 
-        return redirect('leaving_details')->with('flash_message', 'leaving_detail updated!');
+        return redirect('admin/leaving_details')->with('flash_message', 'leaving_detail updated!');
     }
 
     /**
@@ -166,6 +167,6 @@ class leaving_detailController extends Controller
 
         leaving_detail::destroy($id);
 
-        return redirect('leaving_details')->with('flash_message', 'leaving_detail deleted!');
+        return redirect('admin/leaving_details')->with('flash_message', 'leaving_detail deleted!');
     }
 }
